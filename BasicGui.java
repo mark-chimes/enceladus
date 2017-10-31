@@ -19,7 +19,6 @@ public class BasicGui extends JFrame {
         commands = new ArrayList<>();
         textField = new JTextField();
         setupTextArea();
-        setupCommands();
         createCommandableTextField();
     }
 
@@ -31,28 +30,31 @@ public class BasicGui extends JFrame {
         setLayout(new GridLayout(0,1));
     }
 
-    private final void setupCommands() {
-        ArrayList<String> initialCommands = new ArrayList<>();
-
-        initialCommands.add("Hello");
-        initialCommands.add("Hi");
-        initialCommands.add("Howzit");
-        initialCommands.add("This is a super long piece of text in order to try to see what the button does with it");
-        setCommands(initialCommands);
-    }
-
     public final void setCommands(List<String> newCommands) {
         commands = new ArrayList(newCommands);
-        textField.setText(commands.get(0)); // TODO
+        setToFirstCommandOrBlank();
     }
 
     private final void setupTextArea() {
         textArea.setEditable(false);
-        textArea.append("This is a new line\n");
+        addToDisplayArea("This is a new line.");
+    }
+
+    public final void addToDisplayArea(String newText) {
+        textArea.append(newText + "\n");
+
+    }
+
+    private final void setToFirstCommandOrBlank() {
+        if (commands.isEmpty()) {
+            textField.setText("");
+        } else {
+            textField.setText(commands.get(0));
+        }
     }
 
     private final void createCommandableTextField() {
-        textField.setText(commands.get(0));
+        setToFirstCommandOrBlank();
         textField.setEditable(false);
         add(textField);
         textField.addKeyListener(new KeyListener() {
@@ -82,7 +84,7 @@ public class BasicGui extends JFrame {
                         textField.setText(commands.get(listIndex));
                         break;
                     case KeyEvent.VK_ENTER:
-                        textArea.append(textField.getText() + "\n");
+                        addToDisplayArea(textField.getText());
                         textArea.grabFocus();
                         int len = textArea.getDocument().getLength();
                         textArea.setCaretPosition(len);
