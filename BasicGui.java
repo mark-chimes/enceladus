@@ -1,6 +1,8 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ public class BasicGui extends JFrame {
     private final JTextArea textArea;
     private final JTextField textField;
 
-    public BasicGui() {
+    public BasicGui(ActionListener listener) {
         setupBasicLayout();
         textArea = new JTextArea("Welcome to Enceladus!\n");
         JScrollPane scroll = new JScrollPane(textArea);
@@ -19,7 +21,7 @@ public class BasicGui extends JFrame {
         commands = new ArrayList<>();
         textField = new JTextField();
         setupTextArea();
-        createCommandableTextField();
+        createCommandableTextField(listener);
     }
 
     private final void setupBasicLayout() {
@@ -53,7 +55,7 @@ public class BasicGui extends JFrame {
         }
     }
 
-    private final void createCommandableTextField() {
+    private final void createCommandableTextField(ActionListener listener) {
         setToFirstCommandOrBlank();
         textField.setEditable(false);
         add(textField);
@@ -84,10 +86,12 @@ public class BasicGui extends JFrame {
                         textField.setText(commands.get(listIndex));
                         break;
                     case KeyEvent.VK_ENTER:
-                        addToDisplayArea(textField.getText());
+                        String command = textField.getText();
+                        addToDisplayArea(command);
                         textArea.grabFocus();
                         int len = textArea.getDocument().getLength();
                         textArea.setCaretPosition(len);
+                        listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, command));
                 }
             }
 
