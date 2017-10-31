@@ -85,6 +85,8 @@ public class BasicGui extends JFrame {
                 case KeyEvent.VK_UP:
                     if (listIndex > 0) {
                         listIndex--;
+                    } else {
+                        listIndex = commands.size() - 1;
                     }
                     textField.setText(commands.get(listIndex));
                     break;
@@ -92,7 +94,7 @@ public class BasicGui extends JFrame {
                     if (listIndex < commands.size() - 1) {
                         listIndex++;
                     } else {
-                        listIndex = commands.size() - 1;
+                        listIndex = 0;
                     }
                     textField.setText(commands.get(listIndex));
                     break;
