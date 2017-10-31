@@ -7,28 +7,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasicGui extends JFrame {
+    private List<String> commands;
+    private final JTextArea textArea;
+    private final JTextField textField;
 
     public BasicGui() {
+        setupBasicLayout();
+        textArea = new JTextArea("Welcome to Enceladus!\n");
+        JScrollPane scroll = new JScrollPane(textArea);
+        add(scroll);
+        commands = new ArrayList<>();
+        textField = new JTextField();
+        setupTextArea();
+        setupCommands();
+        createCommandableTextField();
+    }
+
+    private final void setupBasicLayout() {
         setTitle("Enceladus");
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridLayout(0,1));
+    }
 
-        JTextArea textArea = new JTextArea("Welcome to Enceladus!\n");
+    private final void setupCommands() {
+        ArrayList<String> initialCommands = new ArrayList<>();
+
+        initialCommands.add("Hello");
+        initialCommands.add("Hi");
+        initialCommands.add("Howzit");
+        initialCommands.add("This is a super long piece of text in order to try to see what the button does with it");
+        setCommands(initialCommands);
+    }
+
+    public final void setCommands(List<String> newCommands) {
+        commands = new ArrayList(newCommands);
+        textField.setText(commands.get(0)); // TODO
+    }
+
+    private final void setupTextArea() {
         textArea.setEditable(false);
         textArea.append("This is a new line\n");
-        JScrollPane scroll = new JScrollPane(textArea);
-        add(scroll);
+    }
 
-        List<String> options = new ArrayList<>();
-        options.add("Hello");
-        options.add("Hi");
-        options.add("Howzit");
-        options.add("This is a super long piece of text in order to try to see what the button does with it");
-
-
-        JTextField textField = new JTextField(options.get(0));
+    private final void createCommandableTextField() {
+        textField.setText(commands.get(0));
         textField.setEditable(false);
         add(textField);
         textField.addKeyListener(new KeyListener() {
@@ -47,20 +71,17 @@ public class BasicGui extends JFrame {
                         if (listIndex > 0) {
                             listIndex --;
                         }
-                        System.out.println("Up");
-                        textField.setText(options.get(listIndex));
+                        textField.setText(commands.get(listIndex));
                         break;
                     case KeyEvent.VK_DOWN:
-                        if (listIndex < options.size() -1) {
+                        if (listIndex < commands.size() -1) {
                             listIndex ++;
                         } else {
-                            listIndex = options.size() - 1;
+                            listIndex = commands.size() - 1;
                         }
-                        System.out.println("Down");
-                        textField.setText(options.get(listIndex));
+                        textField.setText(commands.get(listIndex));
                         break;
                     case KeyEvent.VK_ENTER:
-                        System.out.println("Submitting action");
                         textArea.append(textField.getText() + "\n");
                         textArea.grabFocus();
                         int len = textArea.getDocument().getLength();
