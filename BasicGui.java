@@ -12,16 +12,25 @@ public class BasicGui extends JFrame {
     private List<String> commands;
     private final JTextArea textArea;
     private final JTextField textField;
+    private final List<ActionListener> listeners = new ArrayList<>();
+    private CustomTextKeyListener keyListener;
 
-    public BasicGui(ActionListener listener) {
+
+        public BasicGui() {
         setupBasicLayout();
-        textArea = new JTextArea("Welcome to Enceladus!\n");
+        textArea = new JTextArea("Welcome to Enceladus!");
+        textArea.setToolTipText("Display");
         JScrollPane scroll = new JScrollPane(textArea);
         add(scroll);
         commands = new ArrayList<>();
         textField = new JTextField();
+        textField.setToolTipText("Command");
         setupTextArea();
-        createCommandableTextField(listener);
+        createCommandableTextField();
+    }
+
+    public final void addListener(ActionListener actionListener) {
+        listeners.add(actionListener);
     }
 
     private final void setupBasicLayout() {
@@ -39,11 +48,10 @@ public class BasicGui extends JFrame {
 
     private final void setupTextArea() {
         textArea.setEditable(false);
-        addToDisplayArea("This is a new line.");
     }
 
     public final void addToDisplayArea(String newText) {
-        textArea.append(newText + "\n");
+        textArea.append("\n"  + newText);
 
     }
 
@@ -55,50 +63,63 @@ public class BasicGui extends JFrame {
         }
     }
 
-    private final void createCommandableTextField(ActionListener listener) {
+    private final void createCommandableTextField() {
         setToFirstCommandOrBlank();
         textField.setEditable(false);
         add(textField);
-        textField.addKeyListener(new KeyListener() {
-            int listIndex = 0;
+        keyListener = new CustomTextKeyListener();
+        textField.addKeyListener(keyListener);
+    }
 
-            @Override
-            public void keyTyped(KeyEvent e) {
-                // DO NOTHING
-            }
+    public void resetCommandIndex() {
+        keyListener.resetListIndex();
+    }
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-                switch( keyCode ) {
-                    case KeyEvent.VK_UP:
-                        if (listIndex > 0) {
-                            listIndex --;
-                        }
-                        textField.setText(commands.get(listIndex));
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        if (listIndex < commands.size() -1) {
-                            listIndex ++;
-                        } else {
-                            listIndex = commands.size() - 1;
-                        }
-                        textField.setText(commands.get(listIndex));
-                        break;
-                    case KeyEvent.VK_ENTER:
-                        String command = textField.getText();
-                        addToDisplayArea(command);
-                        textArea.grabFocus();
-                        int len = textArea.getDocument().getLength();
-                        textArea.setCaretPosition(len);
+    private class CustomTextKeyListener implements KeyListener {
+        private int listIndex = 0;
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int keyCode = e.getKeyCode();
+            switch (keyCode) {
+                case KeyEvent.VK_UP:
+                    if (listIndex > 0) {
+                        listIndex--;
+                    }
+                    textField.setText(commands.get(listIndex));
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if (listIndex < commands.size() - 1) {
+                        listIndex++;
+                    } else {
+                        listIndex = commands.size() - 1;
+                    }
+                    textField.setText(commands.get(listIndex));
+                    break;
+                case KeyEvent.VK_ENTER:
+                    String command = textField.getText();
+                    addToDisplayArea(command);
+                    textArea.grabFocus();
+                    int len = textArea.getDocument().getLength();
+                    textArea.setCaretPosition(len);
+                    for (ActionListener listener : listeners) {
                         listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, command));
-                }
+                    }
             }
+        }
 
-            @Override
-            public void keyReleased(KeyEvent e) {
-                // DO NOTHING
-            }
-        });
+        public void resetListIndex() {
+            listIndex = 0;
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            // DO NOTHING
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            // DO NOTHING
+        }
     }
 }
