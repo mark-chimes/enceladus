@@ -1,6 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,47 +11,40 @@ public class Main {
 
     public static void main(String[] args) {
         BasicGui gui = new BasicGui();
+        final List<Integer> commandsIt = new ArrayList<>();
+        commandsIt.add(0);
 
-        setupTextArea(gui);
-        setupCommands(gui);
+        setupCommands();
 
-        ActionListener listener = e -> {
-            String command = e.getActionCommand().toLowerCase();
-            switch(command) {
-                case "exit":
-                    List<String> newCommands = new ArrayList<>();
-                    newCommands.add("No");
-                    newCommands.add("Yes");
-                    gui.addToDisplayArea("Are you sure you want to exit?");
-                    gui.setCommands(newCommands);
-                    break;
-                case "yes":
-                    System.exit(0);
-                    break;
-                case "no":
-                    gui.addToDisplayArea("Not exiting.");
-                    gui.setCommands(initialCommands);
-                    gui.resetCommandIndex();
+
+        KeyAdapter listener = new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (commandsIt.get(0) < initialCommands.size() - 1) {
+                    commandsIt.set(0, commandsIt.get(0) + 1 );
+                } else {
+                    commandsIt.set(0, 0);
+                }
+                gui.setText(initialCommands.get(commandsIt.get(0)));
             }
         };
 
         EventQueue.invokeLater(() -> {
             gui.setVisible(true);
+            gui.setText("Welcome to Enceladus!");
         });
 
+
+
         gui.addListener(listener);
+
+
     }
 
-
-    private static final void setupTextArea(BasicGui gui) {
-        gui.addToDisplayArea("Test line.");
-    }
-
-    private static final void setupCommands(BasicGui gui) {
+    private static final void setupCommands() {
         initialCommands.add("Random command");
         initialCommands.add("Exit");
         initialCommands.add("This is a super long piece of text in order to try to see what the command box does with it");
-        gui.setCommands(initialCommands);
     }
 
 }
