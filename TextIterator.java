@@ -1,3 +1,5 @@
+import com.sun.corba.se.impl.oa.poa.ActiveObjectMap;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -7,45 +9,17 @@ import java.util.Optional;
 /**
  * Created by Mark Chimes on 2017/11/02.
  */
-public class TextDisplay {
+public class TextIterator extends KeyAdapter{
     private final BasicGui gui;
-    Optional<ActionListener> outOfBoundsListener = Optional.empty();
+    private final List<String> texts;
+    private final Optional<ActionListener> oufOfBoundsListenerOpt;
+    private int iteratorIndex;
 
-    Optional<TextIterator> textIterator = Optional.empty();
-
-    public TextDisplay(BasicGui gui) {
-        this.gui = gui;
-    }
-
-    public void newTextsList(List<String> texts) {
-        newTextsList(texts, -1);
-    }
-
-    private void newTextsList(List<String> texts, int index) {
-        textIterator.ifPresent(gui::removeKeyListener);
-        textIterator = Optional.of(new TextIterator(gui, texts, index));
-        gui.addListener(textIterator.get());
-    }
-
-    public Optional<String> currentText() {
-        return textIterator.map(TextIterator::currentText);
-    }
-
-    public Optional<Integer> currentIndex() {
-        return textIterator.map(TextIterator::currentIndex);
-    }
-
-    private final class TextIterator extends KeyAdapter {
-        private final BasicGui gui;
-        private final List<String> texts;
-        private int iteratorIndex;
-        Optional<ActionListener> oufOfBoundsListenerOpt;
-
-        public TextIterator(BasicGui gui, List<String> texts) {
+    public TextIterator(BasicGui gui, List<String> texts) {
             this(gui, texts, 0);
         }
-
         public TextIterator(BasicGui gui, List<String> texts, int index) {
+
             this(gui,texts,index,Optional.empty());
         }
 
@@ -83,5 +57,4 @@ public class TextDisplay {
             }
             gui.setText(texts.get(iteratorIndex));
         }
-    }
 }
