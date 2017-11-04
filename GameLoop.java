@@ -6,11 +6,11 @@ import java.util.ArrayList;
  */
 public class GameLoop {
     private final BasicGui gui;
-    private final CommandDisplay commandDisplay;
+    private final TextDisplay commandDisplay;
 
     public GameLoop(BasicGui gui) {
         this.gui = gui;
-        this.commandDisplay = new CommandDisplay(gui);
+        this.commandDisplay = new TextDisplay(gui);
         commandDisplay.newTextsList(setupCommands());
     }
 

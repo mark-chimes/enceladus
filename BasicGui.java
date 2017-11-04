@@ -10,10 +10,8 @@ import java.util.List;
 
 public class BasicGui extends JFrame {
     private List<String> commands;
-    private final List<KeyListener> listeners = new ArrayList<>();
     private final JLabel label;
     private final JLabel label2;
-    private int listIndex = 0;
 
     public BasicGui() {
             commands = new ArrayList<>();
@@ -35,7 +33,8 @@ public class BasicGui extends JFrame {
         this.addKeyListener(keyListener);
         this.getRootPane().addKeyListener(keyListener);
         label.addKeyListener(keyListener);
-        label2.addKeyListener(keyListener);    }
+        label2.addKeyListener(keyListener);
+    }
 
     public final void setText(String text) {
         label.setText(text);

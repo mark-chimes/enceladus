@@ -1,19 +1,19 @@
-import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * Created by Mark Chimes on 2017/11/02.
  */
-public class CommandDisplay {
+public class TextDisplay {
     private final BasicGui gui;
+    Optional<ActionListener> outOfBoundsListener = Optional.empty();
 
     Optional<TextIterator> textIterator = Optional.empty();
 
-    public CommandDisplay(BasicGui gui) {
+    public TextDisplay(BasicGui gui) {
         this.gui = gui;
     }
 
@@ -27,24 +27,40 @@ public class CommandDisplay {
         gui.addListener(textIterator.get());
     }
 
+    public Optional<String> currentText() {
+        return textIterator.map(TextIterator::currentText);
+    }
+
+    public Optional<Integer> currentIndex() {
+        return textIterator.map(TextIterator::currentIndex);
+    }
 
     private final class TextIterator extends KeyAdapter {
         private final BasicGui gui;
         private final List<String> texts;
-        int iteratorIndex;
+        private int iteratorIndex;
+        Optional<ActionListener> oufOfBoundsListenerOpt;
 
         public TextIterator(BasicGui gui, List<String> texts) {
             this(gui, texts, 0);
         }
 
         public TextIterator(BasicGui gui, List<String> texts, int index) {
+            this(gui,texts,index,Optional.empty());
+        }
+
+        public TextIterator(BasicGui gui, List<String> texts, int index, Optional<ActionListener> outOfBoundsListener) {
             this.gui = gui;
             this.texts = texts;
             iteratorIndex = index;
+            this.oufOfBoundsListenerOpt = outOfBoundsListener;
         }
 
         public String currentText() {
             return texts.get(iteratorIndex);
+        }
+        public int currentIndex() {
+            return iteratorIndex;
         }
 
         @Override
