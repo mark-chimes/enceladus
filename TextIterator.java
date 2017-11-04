@@ -11,16 +11,8 @@ public class TextIterator extends KeyAdapter{
     private final boolean isLooping;
     private int iteratorIndex;
 
-    public TextIterator(BasicGui gui, List<String> texts) {
-        this(gui, texts, 0);
-    }
-
     public TextIterator(BasicGui gui, List<String> texts, boolean isLooping) {
         this(gui, texts, 0, isLooping);
-    }
-
-    public TextIterator(BasicGui gui, List<String> texts, int index) {
-        this(gui,texts,index, true);
     }
 
     public TextIterator(BasicGui gui, List<String> texts, int index, boolean isLooping) {

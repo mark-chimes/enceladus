@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.*;
 
 /**
@@ -8,6 +10,7 @@ import java.util.*;
 public class GameLoop {
     private final BasicGui gui;
     private TextIterator textIterator;
+    private DownListener downListener;
 
     public GameLoop(BasicGui gui) {
         this.gui = gui;
@@ -17,6 +20,7 @@ public class GameLoop {
         EventQueue.invokeLater(() -> {
             gui.setVisible(true);
         });
+        downListener = new DownListener();
         addGuiTextList(welcomeMessage(), false);
     }
 
@@ -46,5 +50,17 @@ public class GameLoop {
         textIterator = new TextIterator(gui, texts, isLooping);
         gui.setText(texts.get(0));
         gui.addListener(textIterator);
+        gui.addListener(downListener); // This is wrong - should be stored with the text iterator?
+    }
+
+    private class DownListener extends KeyAdapter {
+        @Override
+        public void keyReleased(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_DOWN:
+                    changeGuiTextList(initialCommands(), true);
+                    break;
+            }
+        }
     }
 }
