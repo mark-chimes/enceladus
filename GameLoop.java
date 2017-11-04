@@ -8,34 +8,43 @@ import java.util.*;
 public class GameLoop {
     private final BasicGui gui;
     private TextIterator textIterator;
-    Optional<ActionListener> outOfBoundsListener = Optional.empty();
 
     public GameLoop(BasicGui gui) {
         this.gui = gui;
-        textIterator = new TextIterator(gui, setupCommands());
-        gui.addListener(textIterator);
     }
 
     public void setup() {
         EventQueue.invokeLater(() -> {
             gui.setVisible(true);
-            gui.setText("Welcome to Enceladus!");
         });
+        addGuiTextList(welcomeMessage(), false);
     }
 
-    private final ArrayList<String> setupCommands() {
+    public ArrayList<String> welcomeMessage() {
+        ArrayList<String> welcomeMessage = new ArrayList<>();
+        welcomeMessage.add("Welcome to Enceladus! Press left and right to read, and down to skip to the menu.");
+        welcomeMessage.add("If this is your first time playing, please read the instructions.");
+        return welcomeMessage;
+    }
+
+    private final ArrayList<String> initialCommands() {
         ArrayList<String> initialCommands = new ArrayList<>();
-
-        initialCommands.add("Random command");
-        initialCommands.add("This is a super long piece of text in order to try to see what the command box does with it");
+        initialCommands.add("New Game");
+        initialCommands.add("Load Game");
+        initialCommands.add("Instructions");
+        initialCommands.add("Options");
         initialCommands.add("Exit");
-
         return initialCommands;
     }
 
-    private void changeGuiTextList(java.util.List<String> texts, int index) {
+    public void changeGuiTextList(java.util.List<String> texts, boolean isLooping) {
         gui.removeKeyListener(textIterator);
-        textIterator = new TextIterator(gui, texts, index);
+        addGuiTextList(texts, isLooping);
+    }
+
+    private void addGuiTextList(java.util.List<String> texts, boolean isLooping) {
+        textIterator = new TextIterator(gui, texts, isLooping);
+        gui.setText(texts.get(0));
         gui.addListener(textIterator);
     }
 }
