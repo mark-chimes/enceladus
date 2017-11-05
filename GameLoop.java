@@ -9,9 +9,8 @@ import java.util.*;
  */
 public class GameLoop {
     private final BasicGui gui;
-    private TextIterator textIterator;
-    private ItemIterator itemIterator;
-
+    private TextOrItemIterator textIterator;
+    
     public GameLoop(BasicGui gui) {
         this.gui = gui;
     }
@@ -20,7 +19,7 @@ public class GameLoop {
         EventQueue.invokeLater(() -> {
             gui.setVisible(true);
         });
-        setToWelcome();
+        textIterator = setToWelcome(gui);
     }
 
     public ArrayList<String> welcomeMessage() {
@@ -61,28 +60,31 @@ public class GameLoop {
         return thanksForPlaying;
     }
 
-    private void setToWelcome() {
+    private TextOrItemIterator setToWelcome(BasicGui gui) {
         ArrayList<String> texts = welcomeMessage();
-        textIterator = new TextIterator(gui, texts);
+        TextIterator textIterator = new TextIterator(gui, texts);
         gui.setText(texts.get(0));
         gui.addListener(textIterator);
         gui.addListener(new SkipTextListener());
+        return textIterator;
     }
 
-    private void setToMenuCommands() {
+    private TextOrItemIterator setToMenuCommands(BasicGui gui) {
         ArrayList<String> items = initialCommands();
         gui.setText(items.get(0));
-        itemIterator = new ItemIterator(gui, items);
+        ItemIterator itemIterator = new ItemIterator(gui, items);
         gui.addListener(itemIterator);
         gui.addListener(new ConfirmListener());
+        return itemIterator;
     }
 
-    private void setToExit() {
+    private TextOrItemIterator setToExit(BasicGui gui) {
         ArrayList<String> texts = thanksForPlaying();
-        textIterator = new TextIterator(gui, texts);
+        TextIterator textIterator = new TextIterator(gui, texts);
         gui.setText(texts.get(0));
         gui.addListener(textIterator);
         gui.addListener(new ExitOnAnything());
+        return textIterator;
     }
 
     private class SkipTextListener extends KeyAdapter {
@@ -92,7 +94,7 @@ public class GameLoop {
                 case KeyConstants.SKIP_TEXT:
                     gui.removeListener(textIterator);
                     gui.removeListener(this);
-                    setToMenuCommands();
+                    textIterator = setToMenuCommands(gui);
                     break;
             }
         }
@@ -110,16 +112,16 @@ public class GameLoop {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyConstants.CONFIRM:
-                int selectedIndex = itemIterator.currentIndex();
-                String selectedText = itemIterator.currentItem();
+                int selectedIndex = textIterator.currentIndex();
+                String selectedText = textIterator.currentText();
                 if (selectedText.equals("Instructions")) { // TODO
-                    gui.removeListener(itemIterator);
+                    gui.removeListener(textIterator);
                     gui.removeListener(this);
-                    setToWelcome();
+                    textIterator = setToWelcome(gui);
                 } else if (selectedText.equals("Exit")) { // TODO
-                    gui.removeListener(itemIterator);
+                    gui.removeListener(textIterator);
                     gui.removeListener(this);
-                    setToExit();
+                    textIterator = setToExit(gui);
                 } else {
                     System.out.println("Unknown selection");
                 }

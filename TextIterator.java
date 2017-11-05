@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Mark Chimes on 2017/11/02.
  */
-public class TextIterator extends KeyAdapter {
+public class TextIterator extends TextOrItemIterator {
     private final BasicGui gui;
     private final List<String> texts;
     private int iteratorIndex;

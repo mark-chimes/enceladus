@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class ItemIterator extends KeyAdapter {
+public class ItemIterator extends TextOrItemIterator {
     private final BasicGui gui;
     private final List<String> items;
     private int iteratorIndex;
@@ -20,7 +20,7 @@ public class ItemIterator extends KeyAdapter {
         iteratorIndex = index;
     }
 
-    public String currentItem() {
+    public String currentText() {
         return items.get(iteratorIndex);
     }
 
