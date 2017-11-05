@@ -1,17 +1,16 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Mark Chimes on 2017/11/02.
  */
 public class TextIterator extends TextOrItemIterator {
-    private final BasicGui gui;
     private final List<String> texts;
     private int iteratorIndex;
 
-    public TextIterator(BasicGui gui, List<String> texts) {
-        this.gui = gui;
+    public TextIterator(List<String> texts) {
         this.texts = texts;
     }
 
@@ -21,9 +20,8 @@ public class TextIterator extends TextOrItemIterator {
 
     public int currentIndex() { return iteratorIndex; }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
+    public void performActionFor(int action) {
+        switch (action) {
             case KeyConstants.PREVIOUS_TEXT:
                 if (iteratorIndex > 0) {
                     iteratorIndex--;
@@ -35,6 +33,5 @@ public class TextIterator extends TextOrItemIterator {
                 }
                 break;
         }
-        gui.setText(texts.get(iteratorIndex));
     }
 }

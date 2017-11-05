@@ -6,16 +6,14 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class ItemIterator extends TextOrItemIterator {
-    private final BasicGui gui;
     private final List<String> items;
     private int iteratorIndex;
 
-    public ItemIterator(BasicGui gui, List<String> items) {
-        this(gui, items, 0);
+    public ItemIterator(List<String> items) {
+        this(items, 0);
     }
 
-    public ItemIterator(BasicGui gui, List<String> items, int index) {
-        this.gui = gui;
+    public ItemIterator(List<String> items, int index) {
         this.items = items;
         iteratorIndex = index;
     }
@@ -26,9 +24,8 @@ public class ItemIterator extends TextOrItemIterator {
 
     public int currentIndex() { return iteratorIndex; }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
+    public void performActionFor(int action) {
+        switch (action) {
             case KeyConstants.PREVIOUS_ITEM:
                 if (iteratorIndex > 0) {
                     iteratorIndex--;
@@ -44,6 +41,5 @@ public class ItemIterator extends TextOrItemIterator {
                 }
                 break;
         }
-        gui.setText(items.get(iteratorIndex));
     }
 }
