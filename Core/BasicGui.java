@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,30 +28,22 @@ public class BasicGui extends JFrame {
             add(label);
             add(label2);
 
+            label2.setForeground(this.getBackground());
+
             label.grabFocus();
-            label.grabFocus();
-        }
+    }
+
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        label.grabFocus();
+    }
 
     public final void addListener(KeyListener keyListener) {
         this.addKeyListener(keyListener);
-        this.getRootPane().addKeyListener(keyListener);
         label.addKeyListener(keyListener);
         label2.addKeyListener(keyListener);
-    }
-
-    public final void removeListener(KeyListener keyListener) {
-        this.removeKeyListener(keyListener);
-        this.getRootPane().removeKeyListener(keyListener);
-        label.removeKeyListener(keyListener);
-        label2.removeKeyListener(keyListener);
-    }
-
-    public final void addListeners(List<? extends KeyListener> keyListeners) {
-        keyListeners.forEach(l -> addListener(l));
-    }
-
-    public final void removeListeners(List<? extends KeyListener> keyListeners) {
-        keyListeners.forEach(l -> removeListener(l));
+        label.grabFocus();
     }
 
     public final void setText(String text) {
@@ -58,6 +51,8 @@ public class BasicGui extends JFrame {
         label2.setText(text);
         if (label.hasFocus()) {
             label2.grabFocus();
+        } else if (label2.hasFocus()) {
+            label.grabFocus();
         } else {
             label.grabFocus();
         }
