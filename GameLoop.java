@@ -1,7 +1,7 @@
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
@@ -21,12 +21,16 @@ public class GameLoop {
             gui.setVisible(true);
         });
         downListener = new DownListener();
-        addGuiTextList(welcomeMessage(), false);
+        addGuiTextList(welcomeMessage());
     }
 
     public ArrayList<String> welcomeMessage() {
         ArrayList<String> welcomeMessage = new ArrayList<>();
-        welcomeMessage.add("Welcome to Enceladus! Press left and right to read, and down to skip to the menu.");
+        String previous = KeyEvent.getKeyText(KeyConstants.PREVIOUS_TEXT);
+        String next = KeyEvent.getKeyText(KeyConstants.NEXT_TEXT);
+        String skip = KeyEvent.getKeyText(KeyConstants.SKIP_TEXT);
+        welcomeMessage.add(MessageFormat.format("Welcome to Enceladus! Press {0} and {1} to read, " +
+                "and {2} to skip.", previous, next, skip));
         welcomeMessage.add("If this is your first time playing, please read the instructions.");
         return welcomeMessage;
     }
@@ -41,16 +45,15 @@ public class GameLoop {
         return initialCommands;
     }
 
-    public void changeGuiTextList(java.util.List<String> texts, boolean isLooping) {
+    public void changeGuiTextList(java.util.List<String> texts) {
         gui.removeKeyListener(textIterator);
-        addGuiTextList(texts, isLooping);
+        addGuiTextList(texts);
     }
 
-    private void addGuiTextList(java.util.List<String> texts, boolean isLooping) {
-        textIterator = new TextIterator(gui, texts, isLooping);
+    private void addGuiTextList(java.util.List<String> texts) {
+        textIterator = new TextIterator(gui, texts);
         gui.setText(texts.get(0));
         gui.addListener(textIterator);
-        gui.addListener(downListener); // This is wrong - should be stored with the text iterator?
     }
 
     private class DownListener extends KeyAdapter {
@@ -58,7 +61,6 @@ public class GameLoop {
         public void keyReleased(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_DOWN:
-                    changeGuiTextList(initialCommands(), true);
                     break;
             }
         }
