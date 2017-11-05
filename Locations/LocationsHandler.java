@@ -2,16 +2,14 @@ package Locations;
 
 import Core.CommandHandler;
 import Core.CommandOrTextHandler;
-import Core.KeyConstants;
-import Core.KeyPressHandler;
 
 import java.util.ArrayList;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class LocationHandler extends CommandHandler {
-    public LocationHandler() {
+public class LocationsHandler extends CommandHandler {
+    public LocationsHandler() {
         setIteratorMessages(commands());
     }
 
@@ -33,6 +31,6 @@ public class LocationHandler extends CommandHandler {
 
     @Override
     public CommandOrTextHandler newHandlerFrom() {
-        return new LocationHandler();
+        return new LocationsHandler();
     }
 }

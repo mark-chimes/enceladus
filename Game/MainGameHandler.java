@@ -2,7 +2,8 @@ package Game;
 
 import Core.CommandOrTextHandler;
 import Core.CommandHandler;
-import Locations.LocationHandler;
+import Locations.LocationsHandler;
+import People.PeopleHandler;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,10 @@ import java.util.ArrayList;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class MainGameHandler extends CommandHandler {
+    public static final String VIEW_PEOPLE = "View People";
+    public static final String VIEW_LOCATIONS = "View Locations";
+    public static final String EXIT = "Exit";
+
     public MainGameHandler() {
         setIteratorMessages(commands());
     }
@@ -18,12 +23,13 @@ public class MainGameHandler extends CommandHandler {
     @Override
     public void performActionFor(String actionString) {
         switch (actionString) {
-            case "View People":
+            case VIEW_PEOPLE:
+                setNextCommand(new PeopleHandler());
                 break;
-            case "View Locations":
-                setNextCommand(new LocationHandler());
+            case VIEW_LOCATIONS:
+                setNextCommand(new LocationsHandler());
                 break;
-            case "Exit":
+            case EXIT:
                 System.exit(0);
                 break;
         }
@@ -31,10 +37,10 @@ public class MainGameHandler extends CommandHandler {
 
     private final ArrayList<String> commands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add("View People");
-        commands.add("View Locations");
+        commands.add(VIEW_PEOPLE);
+        commands.add(VIEW_LOCATIONS);
         commands.add("TODO: Save Game");
-        commands.add("Exit");
+        commands.add(EXIT);
         return commands;
     }
 
