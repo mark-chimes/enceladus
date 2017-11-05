@@ -22,7 +22,7 @@ public class TextIterator extends KeyAdapter {
     public int currentIndex() { return iteratorIndex; }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyConstants.PREVIOUS_TEXT:
                 if (iteratorIndex > 0) {

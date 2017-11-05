@@ -36,6 +36,13 @@ public class BasicGui extends JFrame {
         label2.addKeyListener(keyListener);
     }
 
+    public final void removeListener(KeyListener keyListener) {
+        this.removeKeyListener(keyListener);
+        this.getRootPane().removeKeyListener(keyListener);
+        label.removeKeyListener(keyListener);
+        label2.removeKeyListener(keyListener);
+    }
+
     public final void setText(String text) {
         label.setText(text);
         label2.setText(text);

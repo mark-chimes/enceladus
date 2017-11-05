@@ -10,7 +10,7 @@ import java.util.*;
 public class GameLoop {
     private final BasicGui gui;
     private TextIterator textIterator;
-    private SkipTextListener skipListener;
+    private ItemIterator itemIterator;
 
     public GameLoop(BasicGui gui) {
         this.gui = gui;
@@ -20,12 +20,11 @@ public class GameLoop {
         EventQueue.invokeLater(() -> {
             gui.setVisible(true);
         });
-        skipListener = new SkipTextListener();
         ArrayList<String> texts = welcomeMessage();
         textIterator = new TextIterator(gui, texts);
         gui.setText(texts.get(0));
         gui.addListener(textIterator);
-        gui.addListener(skipListener);
+        gui.addListener(new SkipTextListener());
     }
 
     public ArrayList<String> welcomeMessage() {
@@ -60,29 +59,64 @@ public class GameLoop {
         return initialCommands;
     }
 
-    public void changeGuiTextList(java.util.List<String> texts) {
-
-        addGuiTextList(texts);
-    }
-
-    private void addGuiTextList(java.util.List<String> texts) {
-        textIterator = new TextIterator(gui, texts);
-        gui.setText(texts.get(0));
-        gui.addListener(textIterator);
+    private final ArrayList<String> thanksForPlaying() {
+        ArrayList<String> thanksForPlaying = new ArrayList<>();
+        thanksForPlaying.add("Thanks for playing!");
+        return thanksForPlaying;
     }
 
     private class SkipTextListener extends KeyAdapter {
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyConstants.SKIP_TEXT:
                     System.out.println("Got skip code");
-                    gui.removeKeyListener(textIterator);
+                    gui.removeListener(textIterator);
+                    gui.removeListener(this);
                     ArrayList<String> items = initialCommands();
-                    ItemIterator optionsIterator = new ItemIterator(gui, items);
-                    gui.addListener(optionsIterator);
                     gui.setText(items.get(0));
+                    itemIterator = new ItemIterator(gui, items);
+                    gui.addListener(itemIterator);
+                    gui.addListener(new ConfirmListener());
                     break;
+            }
+        }
+    }
+
+    private class ExitOnAnything extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            System.exit(0);
+        }
+    }
+
+    private class ConfirmListener extends KeyAdapter {
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyConstants.CONFIRM:
+                int selectedIndex = itemIterator.currentIndex();
+                String selectedText = itemIterator.currentItem();
+                if (selectedText.equals("Instructions")) { // TODO
+                    gui.removeListener(itemIterator);
+                    gui.removeListener(this);
+                    ArrayList<String> texts = welcomeMessage();
+                    textIterator = new TextIterator(gui, texts);
+                    gui.setText(texts.get(0));
+                    gui.addListener(textIterator);
+                    gui.addListener(new SkipTextListener());
+                } else if (selectedText.equals("Exit")) { // TODO
+                    gui.removeListener(itemIterator);
+                    gui.removeListener(this);
+                    ArrayList<String> texts = thanksForPlaying();
+                    textIterator = new TextIterator(gui, texts);
+                    gui.setText(texts.get(0));
+                    gui.addListener(textIterator);
+                    gui.addListener(new ExitOnAnything());
+                } else {
+                    System.out.println("Unknown selection");
+                }
+                break;
             }
         }
     }
