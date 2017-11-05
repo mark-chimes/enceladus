@@ -1,7 +1,7 @@
 package Game;
 
+import Core.KeyPressHandler;
 import Core.CommandHandler;
-import Core.ItemHandler;
 import Core.KeyConstants;
 import MainMenu.WelcomeMessenger;
 
@@ -11,16 +11,16 @@ import java.util.Optional;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class MainGameHandler extends ItemHandler {
-    Optional<CommandHandler> nextCommand = Optional.empty();
+public class MainGameHandler extends CommandHandler {
+    Optional<KeyPressHandler> nextCommand = Optional.empty();
 
     public MainGameHandler() {
         setIteratorMessages(commands());
     }
 
     @Override
-    public void performActionFor(int keyCode) {
-        super.performActionFor(keyCode);
+    public void performKeyPress(int keyCode) {
+        super.performKeyPress(keyCode);
         if (keyCode == KeyConstants.CONFIRM) {
             switch (currentText()) {
                 case "View People":

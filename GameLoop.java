@@ -1,5 +1,5 @@
 import Core.BasicGui;
-import Core.ItemOrMessageHandler;
+import Core.CommandOrTextHandler;
 import MainMenu.WelcomeMessenger;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ public class GameLoop {
     private CommandKeyListener keyListener;
     private final static Logger LOGGER = Logger.getLogger(GameLoop.class.getName());
 
-    private ItemOrMessageHandler handler;
+    private CommandOrTextHandler handler;
 
     public GameLoop(BasicGui gui) {
         this.gui = gui;
@@ -38,14 +38,14 @@ public class GameLoop {
 
     private void performActionFor(int keyCode) {
         LOGGER.info("Performing action for: " + KeyEvent.getKeyText(keyCode));
-        handler.performActionFor(keyCode);
+        handler.performKeyPress(keyCode);
         if (handler.nextCommand().isPresent()) {
             setCurrentCommandHandler(handler.nextCommand().get());
         }
         gui.setText(handler.currentText());
     }
 
-    private void setCurrentCommandHandler(ItemOrMessageHandler handler) {
+    private void setCurrentCommandHandler(CommandOrTextHandler handler) {
         LOGGER.info("Setting current command handler to: " + handler.getClass());
         this.handler = handler;
         gui.setText(handler.currentText());

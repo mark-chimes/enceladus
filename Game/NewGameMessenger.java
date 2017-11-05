@@ -1,24 +1,21 @@
 package Game;
 
 import Core.KeyConstants;
-import Core.MessageHandler;
-import MainMenu.MenuCommandHandler;
+import Core.TextHandler;
 
-import java.awt.event.KeyEvent;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class NewGameMessenger extends MessageHandler {
+public class NewGameMessenger extends TextHandler {
     public NewGameMessenger() {
         setIteratorMessages(welcomeMessage());
     }
 
     @Override
-    public void performActionFor(int keyCode) {
-        super.performActionFor(keyCode);
+    public void performKeyPress(int keyCode) {
+        super.performKeyPress(keyCode);
         if (keyCode == KeyConstants.SKIP_TEXT) {
             setNextCommand(new MainGameHandler());
         }

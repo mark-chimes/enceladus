@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Mark Chimes on 2017/11/02.
  */
-public class TextIterator extends TextOrItemIterator {
+public class TextIterator implements CommandOrTextIterator {
     private final List<String> texts;
     private int iteratorIndex;
 
@@ -19,7 +19,7 @@ public class TextIterator extends TextOrItemIterator {
 
     public int currentIndex() { return iteratorIndex; }
 
-    public void performActionFor(int action) {
+    public void performKeyPress(int action) {
         switch (action) {
             case KeyConstants.PREVIOUS_TEXT:
                 if (iteratorIndex > 0) {

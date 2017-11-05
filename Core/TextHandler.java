@@ -1,8 +1,5 @@
 package Core;
 
-import Core.ItemOrMessageHandler;
-import Core.TextIterator;
-
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
 import java.util.List;
@@ -12,8 +9,8 @@ import java.util.Optional;
  * Created by Mark Chimes on 2017/11/05.
  */
 
-public abstract class MessageHandler extends ItemOrMessageHandler {
-    private Optional<ItemOrMessageHandler> nextCommand = Optional.empty();
+public abstract class TextHandler extends CommandOrTextHandler {
+    private Optional<CommandOrTextHandler> nextCommand = Optional.empty();
 
     protected void setIteratorMessages(List<String> messages) {
         String skip = KeyEvent.getKeyText(KeyConstants.SKIP_TEXT);
@@ -22,8 +19,8 @@ public abstract class MessageHandler extends ItemOrMessageHandler {
     }
 
     @Override
-    public void performActionFor(int keyCode) {
-        iterator.performActionFor(keyCode);
+    public void performKeyPress(int keyCode) {
+        iterator.performKeyPress(keyCode);
     }
 
     @Override
@@ -37,11 +34,11 @@ public abstract class MessageHandler extends ItemOrMessageHandler {
     }
 
     @Override
-    public Optional<ItemOrMessageHandler> nextCommand() {
+    public Optional<CommandOrTextHandler> nextCommand() {
         return nextCommand;
     }
 
-    protected void setNextCommand(ItemOrMessageHandler newCommand) {
+    protected void setNextCommand(CommandOrTextHandler newCommand) {
         nextCommand = Optional.of(newCommand);
     }
 }

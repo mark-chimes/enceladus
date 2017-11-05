@@ -1,0 +1,39 @@
+package Core;
+
+import java.util.Optional;
+
+/**
+ * Created by Mark Chimes on 2017/11/05.
+ */
+public abstract class CommandOrTextHandler implements CommandOrTextIterator {
+    protected CommandOrTextIterator iterator;
+    protected Optional<CommandOrTextHandler> nextCommand = Optional.empty();
+
+    @Override
+    public void performKeyPress(int keyCode) {
+        iterator.performKeyPress(keyCode);
+    }
+
+    @Override
+    public String currentText() {
+        return iterator.currentText();
+    }
+
+    @Override
+    public int currentIndex() {
+        return iterator.currentIndex();
+    }
+
+    protected void setTextOrItemIterator(CommandOrTextIterator iterator) {
+        this.iterator = iterator;
+    }
+
+    public Optional<CommandOrTextHandler> nextCommand() {
+        return nextCommand;
+    }
+
+    protected void setNextCommand(CommandOrTextHandler newCommand) {
+        nextCommand = Optional.of(newCommand);
+    }
+
+}

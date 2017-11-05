@@ -1,22 +1,19 @@
 package Core;
 
-import Core.KeyConstants;
-import Core.TextOrItemIterator;
-
 import java.util.List;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class ItemIterator extends TextOrItemIterator {
+public class CommandIterator implements CommandOrTextIterator {
     private final List<String> items;
     private int iteratorIndex;
 
-    public ItemIterator(List<String> items) {
+    public CommandIterator(List<String> items) {
         this(items, 0);
     }
 
-    public ItemIterator(List<String> items, int index) {
+    public CommandIterator(List<String> items, int index) {
         this.items = items;
         iteratorIndex = index;
     }
@@ -27,7 +24,7 @@ public class ItemIterator extends TextOrItemIterator {
 
     public int currentIndex() { return iteratorIndex; }
 
-    public void performActionFor(int action) {
+    public void performKeyPress(int action) {
         switch (action) {
             case KeyConstants.PREVIOUS_ITEM:
                 if (iteratorIndex > 0) {
