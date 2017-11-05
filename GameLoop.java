@@ -1,10 +1,8 @@
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.MessageFormat;
 import java.util.*;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
