@@ -1,6 +1,8 @@
 package Core;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
@@ -8,7 +10,6 @@ import java.util.Optional;
 public abstract class CommandOrTextHandler implements KeyPressHandler {
     protected CommandOrTextIterator iterator;
     protected Optional<CommandOrTextHandler> nextCommand = Optional.empty();
-    protected Optional<CommandOrTextHandler> previousCommand = Optional.empty();
 
     @Override
     public void performKeyPress(int keyCode) {
@@ -34,10 +35,11 @@ public abstract class CommandOrTextHandler implements KeyPressHandler {
     }
 
     protected void setNextCommand(CommandOrTextHandler newCommand) {
-        nextCommand = Optional.of(newCommand);
-    }
-    protected void setPreviousCommand(CommandOrTextHandler newCommand) {
-        previousCommand = Optional.of(newCommand);
+        nextCommand = Optional.ofNullable(newCommand);
     }
     public abstract CommandOrTextHandler newHandlerFrom();
+
+    public Optional<List<String>> getHelpText() {
+        return Optional.empty();
+    }
 }

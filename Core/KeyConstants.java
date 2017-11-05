@@ -15,4 +15,7 @@ public class KeyConstants {
     public static final int CONFIRM = KeyEvent.VK_ENTER;
 
     public static final int SKIP_TEXT = KeyEvent.VK_ENTER;
+
+    public static final int HELP = KeyEvent.VK_F1;
+
 }

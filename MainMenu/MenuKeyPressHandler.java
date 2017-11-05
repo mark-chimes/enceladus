@@ -7,6 +7,7 @@ import Core.KeyConstants;
 import Game.NewGameMessenger;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -46,5 +47,28 @@ public class MenuKeyPressHandler extends CommandHandler {
     @Override
     public CommandOrTextHandler newHandlerFrom() {
         return new MenuKeyPressHandler();
+    }
+
+    @Override
+    public Optional<List<String>> getHelpText() {
+        List<String> helpText = new ArrayList<>();
+        switch(currentText()) {
+            case "New Game" :
+                helpText.add("Starts a game completely from the beginning.");
+                break;
+            case "Load Game" :
+                helpText.add("Continues a game that was previously played.");
+                break;
+            case "Instructions" :
+                helpText.add("Provides basic instructions for play.");
+                break;
+            case "Options" :
+                helpText.add("Set game-play options such as controls.");
+                break;
+            case "Exit" :
+                helpText.add("Quits the game completely.");
+                break;
+        }
+        return Optional.of(helpText);
     }
 }

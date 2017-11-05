@@ -2,12 +2,13 @@ package Game;
 
 import Core.CommandOrTextHandler;
 import Core.KeyConstants;
-import Core.KeyPressHandler;
 import Core.TextHandler;
 
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
@@ -36,5 +37,4 @@ public class NewGameMessenger extends TextHandler {
         welcomeMessage.add(MessageFormat.format("Starting a new game. Press {0} to begin.",skip));
         return welcomeMessage;
     }
-
 }
