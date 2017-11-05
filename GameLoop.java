@@ -23,8 +23,10 @@ public class GameLoop {
         currentListeners = setToWelcome(gui);
     }
 
-    public final void removeCurrentListeners() {
+    public final void setCurrentListeners(ArrayList<CommandKeyListener> listeners) {
         gui.removeListeners(currentListeners);
+        this.currentListeners = listeners;
+        gui.addListeners(listeners);
     }
 
     public ArrayList<String> welcomeMessage() {
@@ -69,32 +71,24 @@ public class GameLoop {
         ArrayList<String> texts = welcomeMessage();
         gui.setText(texts.get(0));
 
-
-        CommandKeyListener textIterator = new TextIterator(gui, texts);
-        CommandKeyListener skipListener = new SkipTextListener();
-
-        gui.addListener(textIterator);
-        gui.addListener(skipListener);
-
         ArrayList<CommandKeyListener> commandKeys = new ArrayList<>();
-        commandKeys.add(textIterator);
-        commandKeys.add(skipListener);
+        commandKeys.add(new TextIterator(gui, texts));
+        commandKeys.add(new SkipTextListener());
+        gui.addListeners(commandKeys);
+
         return commandKeys;
     }
 
-    private ArrayList<CommandKeyListener> setToMenuCommands(BasicGui gui) {
+    public ArrayList<CommandKeyListener> setToMenuCommands(BasicGui gui) {
         ArrayList<String> items = initialCommands();
         gui.setText(items.get(0));
 
         TextOrItemIterator itemIterator = new ItemIterator(gui, items);
-        CommandKeyListener confirmListener = new ConfirmListener(itemIterator);
-
-        gui.addListener(itemIterator);
-        gui.addListener(confirmListener);
 
         ArrayList<CommandKeyListener> commandKeys = new ArrayList<>();
         commandKeys.add(itemIterator);
-        commandKeys.add(confirmListener);
+        commandKeys.add(new ConfirmListener(itemIterator));
+
         return commandKeys;
     }
 
@@ -102,15 +96,11 @@ public class GameLoop {
         ArrayList<String> texts = thanksForPlaying();
         gui.setText(texts.get(0));
 
-        CommandKeyListener textIterator = new TextIterator(gui, texts);
-        CommandKeyListener exitListener = new ExitOnAnything();
-
-        gui.addListener(textIterator);
-        gui.addListener(exitListener);
-
         ArrayList<CommandKeyListener> commandKeys = new ArrayList<>();
-        commandKeys.add(textIterator);
-        commandKeys.add(exitListener);
+        commandKeys.add(new TextIterator(gui, texts));
+        commandKeys.add(new ExitOnAnything());
+        gui.addListeners(commandKeys);
+
         return commandKeys;
     }
 
@@ -119,8 +109,7 @@ public class GameLoop {
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyConstants.SKIP_TEXT:
-                    removeCurrentListeners();
-                    currentListeners = setToMenuCommands(gui);
+                    setCurrentListeners(setToMenuCommands(gui));
                     break;
             }
         }
@@ -147,11 +136,9 @@ public class GameLoop {
                     int selectedIndex = iterator.currentIndex();
                     String selectedText = iterator.currentText();
                     if (selectedText.equals("Instructions")) { // TODO
-                        removeCurrentListeners();
-                        currentListeners = setToWelcome(gui);
+                        setCurrentListeners(setToWelcome(gui));
                     } else if (selectedText.equals("Exit")) { // TODO
-                        removeCurrentListeners();
-                        currentListeners = setToExit(gui);
+                        setCurrentListeners(setToExit(gui));
                     } else {
                         System.out.println("Unknown selection");
                     }

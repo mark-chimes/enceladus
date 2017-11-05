@@ -43,6 +43,10 @@ public class BasicGui extends JFrame {
         label2.removeKeyListener(keyListener);
     }
 
+    public final void addListeners(List<? extends KeyListener> keyListeners) {
+        keyListeners.forEach(l -> addListener(l));
+    }
+
     public final void removeListeners(List<? extends KeyListener> keyListeners) {
         keyListeners.forEach(l -> removeListener(l));
     }
