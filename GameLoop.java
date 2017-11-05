@@ -15,7 +15,7 @@ public class GameLoop {
     private CommandKeyListener keyListener;
     private final static Logger LOGGER = Logger.getLogger(GameLoop.class.getName());
 
-    private CommandHandler handler;
+    private ItemOrMessageHandler handler;
 
     public GameLoop(BasicGui gui) {
         this.gui = gui;
@@ -39,41 +39,21 @@ public class GameLoop {
     private void performActionFor(int keyCode) {
         LOGGER.info("Performing action for: " + KeyEvent.getKeyText(keyCode));
         handler.performActionFor(keyCode);
+        if (handler.nextCommand().isPresent()) {
+            setCurrentCommandHandler(handler.nextCommand().get());
+        }
         gui.setText(handler.currentText());
     }
 
-    private void setCurrentCommandHandler(CommandHandler handler) {
+    private void setCurrentCommandHandler(ItemOrMessageHandler handler) {
         LOGGER.info("Setting current command handler to: " + handler.getClass());
         this.handler = handler;
         gui.setText(handler.currentText());
     }
 
-    private abstract class Messenger implements CommandHandler {
-        private TextIterator iterator;
 
-        protected void setIteratorMessages(List<String> messages) {
-            iterator = new TextIterator(messages);
-        }
-
-        @Override
-        public void performActionFor(int keyCode) {
-            iterator.performActionFor(keyCode);
-        }
-
-        @Override
-        public String currentText() {
-            return iterator.currentText();
-        }
-
-        @Override
-        public int currentIndex() {
-            return 0;
-        }
-    }
-
-    private class WelcomeMessenger extends Messenger {
+    private class WelcomeMessenger extends MessageHandler {
         public WelcomeMessenger() {
-            super();
             setIteratorMessages(welcomeMessage());
         }
 
@@ -81,7 +61,7 @@ public class GameLoop {
         public void performActionFor(int keyCode) {
             super.performActionFor(keyCode);
             if (keyCode == KeyConstants.SKIP_TEXT) {
-                setCurrentCommandHandler(new MenuCommandHandler());
+                setNextCommand(new MenuCommandHandler());
             }
         }
 
@@ -108,30 +88,9 @@ public class GameLoop {
         }
     }
 
-    private abstract class ItemHandler implements CommandHandler {
-        private ItemIterator iterator;
-
-        @Override
-        public void performActionFor(int keyCode) {
-            iterator.performActionFor(keyCode);
-        }
-
-        protected void setIteratorMessages(List<String> messages) {
-            iterator = new ItemIterator(messages);
-        }
-
-        @Override
-        public String currentText() {
-            return iterator.currentText();
-        }
-
-        @Override
-        public int currentIndex() {
-            return iterator.currentIndex();
-        }
-    }
-
     private class MenuCommandHandler extends ItemHandler {
+        Optional<CommandHandler> nextCommand = Optional.empty();
+
         public MenuCommandHandler() {
             setIteratorMessages(initialCommands());
         }
@@ -142,10 +101,8 @@ public class GameLoop {
             if (keyCode == KeyConstants.CONFIRM) {
                 switch (currentText()) {
                     case "Instructions":
-                        setCurrentCommandHandler(new WelcomeMessenger());
+                        setNextCommand(new WelcomeMessenger());
                         break;
-                    case "Exit":
-                        System.exit(0);
                 }
             }
         }
