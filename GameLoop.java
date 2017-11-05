@@ -20,11 +20,7 @@ public class GameLoop {
         EventQueue.invokeLater(() -> {
             gui.setVisible(true);
         });
-        ArrayList<String> texts = welcomeMessage();
-        textIterator = new TextIterator(gui, texts);
-        gui.setText(texts.get(0));
-        gui.addListener(textIterator);
-        gui.addListener(new SkipTextListener());
+        setToWelcome();
     }
 
     public ArrayList<String> welcomeMessage() {
@@ -65,19 +61,38 @@ public class GameLoop {
         return thanksForPlaying;
     }
 
+    private void setToWelcome() {
+        ArrayList<String> texts = welcomeMessage();
+        textIterator = new TextIterator(gui, texts);
+        gui.setText(texts.get(0));
+        gui.addListener(textIterator);
+        gui.addListener(new SkipTextListener());
+    }
+
+    private void setToMenuCommands() {
+        ArrayList<String> items = initialCommands();
+        gui.setText(items.get(0));
+        itemIterator = new ItemIterator(gui, items);
+        gui.addListener(itemIterator);
+        gui.addListener(new ConfirmListener());
+    }
+
+    private void setToExit() {
+        ArrayList<String> texts = thanksForPlaying();
+        textIterator = new TextIterator(gui, texts);
+        gui.setText(texts.get(0));
+        gui.addListener(textIterator);
+        gui.addListener(new ExitOnAnything());
+    }
+
     private class SkipTextListener extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyConstants.SKIP_TEXT:
-                    System.out.println("Got skip code");
                     gui.removeListener(textIterator);
                     gui.removeListener(this);
-                    ArrayList<String> items = initialCommands();
-                    gui.setText(items.get(0));
-                    itemIterator = new ItemIterator(gui, items);
-                    gui.addListener(itemIterator);
-                    gui.addListener(new ConfirmListener());
+                    setToMenuCommands();
                     break;
             }
         }
@@ -100,19 +115,11 @@ public class GameLoop {
                 if (selectedText.equals("Instructions")) { // TODO
                     gui.removeListener(itemIterator);
                     gui.removeListener(this);
-                    ArrayList<String> texts = welcomeMessage();
-                    textIterator = new TextIterator(gui, texts);
-                    gui.setText(texts.get(0));
-                    gui.addListener(textIterator);
-                    gui.addListener(new SkipTextListener());
+                    setToWelcome();
                 } else if (selectedText.equals("Exit")) { // TODO
                     gui.removeListener(itemIterator);
                     gui.removeListener(this);
-                    ArrayList<String> texts = thanksForPlaying();
-                    textIterator = new TextIterator(gui, texts);
-                    gui.setText(texts.get(0));
-                    gui.addListener(textIterator);
-                    gui.addListener(new ExitOnAnything());
+                    setToExit();
                 } else {
                     System.out.println("Unknown selection");
                 }
