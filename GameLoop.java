@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -9,8 +10,8 @@ import java.util.*;
  */
 public class GameLoop {
     private final BasicGui gui;
-    private TextOrItemIterator textIterator;
-    
+    private ArrayList<CommandKeyListener> currentListeners;
+
     public GameLoop(BasicGui gui) {
         this.gui = gui;
     }
@@ -19,7 +20,11 @@ public class GameLoop {
         EventQueue.invokeLater(() -> {
             gui.setVisible(true);
         });
-        textIterator = setToWelcome(gui);
+        currentListeners = setToWelcome(gui);
+    }
+
+    public final void removeCurrentListeners() {
+        gui.removeListeners(currentListeners);
     }
 
     public ArrayList<String> welcomeMessage() {
@@ -60,72 +65,97 @@ public class GameLoop {
         return thanksForPlaying;
     }
 
-    private TextOrItemIterator setToWelcome(BasicGui gui) {
+    private ArrayList<CommandKeyListener> setToWelcome(BasicGui gui) {
         ArrayList<String> texts = welcomeMessage();
-        TextIterator textIterator = new TextIterator(gui, texts);
         gui.setText(texts.get(0));
+
+
+        CommandKeyListener textIterator = new TextIterator(gui, texts);
+        CommandKeyListener skipListener = new SkipTextListener();
+
         gui.addListener(textIterator);
-        gui.addListener(new SkipTextListener());
-        return textIterator;
+        gui.addListener(skipListener);
+
+        ArrayList<CommandKeyListener> commandKeys = new ArrayList<>();
+        commandKeys.add(textIterator);
+        commandKeys.add(skipListener);
+        return commandKeys;
     }
 
-    private TextOrItemIterator setToMenuCommands(BasicGui gui) {
+    private ArrayList<CommandKeyListener> setToMenuCommands(BasicGui gui) {
         ArrayList<String> items = initialCommands();
         gui.setText(items.get(0));
-        ItemIterator itemIterator = new ItemIterator(gui, items);
+
+        TextOrItemIterator itemIterator = new ItemIterator(gui, items);
+        CommandKeyListener confirmListener = new ConfirmListener(itemIterator);
+
         gui.addListener(itemIterator);
-        gui.addListener(new ConfirmListener());
-        return itemIterator;
+        gui.addListener(confirmListener);
+
+        ArrayList<CommandKeyListener> commandKeys = new ArrayList<>();
+        commandKeys.add(itemIterator);
+        commandKeys.add(confirmListener);
+        return commandKeys;
     }
 
-    private TextOrItemIterator setToExit(BasicGui gui) {
+    private ArrayList<CommandKeyListener> setToExit(BasicGui gui) {
         ArrayList<String> texts = thanksForPlaying();
-        TextIterator textIterator = new TextIterator(gui, texts);
         gui.setText(texts.get(0));
+
+        CommandKeyListener textIterator = new TextIterator(gui, texts);
+        CommandKeyListener exitListener = new ExitOnAnything();
+
         gui.addListener(textIterator);
-        gui.addListener(new ExitOnAnything());
-        return textIterator;
+        gui.addListener(exitListener);
+
+        ArrayList<CommandKeyListener> commandKeys = new ArrayList<>();
+        commandKeys.add(textIterator);
+        commandKeys.add(exitListener);
+        return commandKeys;
     }
 
-    private class SkipTextListener extends KeyAdapter {
+    private class SkipTextListener extends CommandKeyListener {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyConstants.SKIP_TEXT:
-                    gui.removeListener(textIterator);
-                    gui.removeListener(this);
-                    textIterator = setToMenuCommands(gui);
+                    removeCurrentListeners();
+                    currentListeners = setToMenuCommands(gui);
                     break;
             }
         }
     }
 
-    private class ExitOnAnything extends KeyAdapter {
+    private class ExitOnAnything extends CommandKeyListener {
         @Override
         public void keyPressed(KeyEvent e) {
             System.exit(0);
         }
     }
 
-    private class ConfirmListener extends KeyAdapter {
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyConstants.CONFIRM:
-                int selectedIndex = textIterator.currentIndex();
-                String selectedText = textIterator.currentText();
-                if (selectedText.equals("Instructions")) { // TODO
-                    gui.removeListener(textIterator);
-                    gui.removeListener(this);
-                    textIterator = setToWelcome(gui);
-                } else if (selectedText.equals("Exit")) { // TODO
-                    gui.removeListener(textIterator);
-                    gui.removeListener(this);
-                    textIterator = setToExit(gui);
-                } else {
-                    System.out.println("Unknown selection");
-                }
-                break;
+    private class ConfirmListener extends CommandKeyListener {
+        private final TextOrItemIterator iterator;
+
+        public ConfirmListener(TextOrItemIterator iterator) {
+            this.iterator = iterator;
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case KeyConstants.CONFIRM:
+                    int selectedIndex = iterator.currentIndex();
+                    String selectedText = iterator.currentText();
+                    if (selectedText.equals("Instructions")) { // TODO
+                        removeCurrentListeners();
+                        currentListeners = setToWelcome(gui);
+                    } else if (selectedText.equals("Exit")) { // TODO
+                        removeCurrentListeners();
+                        currentListeners = setToExit(gui);
+                    } else {
+                        System.out.println("Unknown selection");
+                    }
+                    break;
             }
         }
     }
