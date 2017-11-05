@@ -3,6 +3,8 @@ package Game;
 import Core.KeyConstants;
 import Core.TextHandler;
 
+import java.awt.event.KeyEvent;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +25,8 @@ public class NewGameMessenger extends TextHandler {
 
     public ArrayList<String> welcomeMessage() {
         ArrayList<String> welcomeMessage = new ArrayList<>();
-        welcomeMessage.add("Starting a new game.");
+        String skip = KeyEvent.getKeyText(KeyConstants.SKIP_TEXT);
+        welcomeMessage.add(MessageFormat.format("Starting a new game. Press {0} to begin.",skip));
         return welcomeMessage;
     }
 

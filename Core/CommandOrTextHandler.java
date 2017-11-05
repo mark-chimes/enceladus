@@ -5,7 +5,7 @@ import java.util.Optional;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public abstract class CommandOrTextHandler implements CommandOrTextIterator {
+public abstract class CommandOrTextHandler implements KeyPressHandler {
     protected CommandOrTextIterator iterator;
     protected Optional<CommandOrTextHandler> nextCommand = Optional.empty();
 

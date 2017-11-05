@@ -19,19 +19,16 @@ public class MenuKeyPressHandler extends CommandHandler {
     }
 
     @Override
-    public void performKeyPress(int keyCode) {
-        super.performKeyPress(keyCode);
-        if (keyCode == KeyConstants.CONFIRM) {
-            switch (currentText()) {
-                case "New Game" :
-                    setNextCommand(new NewGameMessenger());
-                    break;
-                case "Instructions":
-                    setNextCommand(new WelcomeMessenger());
-                    break;
-                case "Exit":
-                    System.exit(0);
-            }
+    public void performActionFor(String actionString) {
+        switch (actionString) {
+            case "New Game" :
+                setNextCommand(new NewGameMessenger());
+                break;
+            case "Instructions":
+                setNextCommand(new WelcomeMessenger());
+                break;
+            case "Exit":
+                System.exit(0);
         }
     }
 

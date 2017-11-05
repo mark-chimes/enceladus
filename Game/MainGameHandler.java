@@ -3,6 +3,7 @@ package Game;
 import Core.KeyPressHandler;
 import Core.CommandHandler;
 import Core.KeyConstants;
+import Locations.LocationHandler;
 import MainMenu.WelcomeMessenger;
 
 import java.util.ArrayList;
@@ -19,18 +20,16 @@ public class MainGameHandler extends CommandHandler {
     }
 
     @Override
-    public void performKeyPress(int keyCode) {
-        super.performKeyPress(keyCode);
-        if (keyCode == KeyConstants.CONFIRM) {
-            switch (currentText()) {
-                case "View People":
-                    break;
-                case "View Locations":
-                    setNextCommand(new WelcomeMessenger());
-                    break;
-                case "Exit":
-                    System.exit(0);
-            }
+    public void performActionFor(String actionString) {
+        switch (actionString) {
+            case "View People":
+                break;
+            case "View Locations":
+                setNextCommand(new LocationHandler());
+                break;
+            case "Exit":
+                System.exit(0);
+                break;
         }
     }
 
