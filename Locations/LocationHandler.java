@@ -1,7 +1,9 @@
 package Locations;
 
 import Core.CommandHandler;
+import Core.CommandOrTextHandler;
 import Core.KeyConstants;
+import Core.KeyPressHandler;
 
 import java.util.ArrayList;
 
@@ -27,5 +29,10 @@ public class LocationHandler extends CommandHandler {
         initialCommands.add("Main Base");
         initialCommands.add("The Wild Beyond");
         return initialCommands;
+    }
+
+    @Override
+    public CommandOrTextHandler newHandlerFrom() {
+        return new LocationHandler();
     }
 }

@@ -1,5 +1,6 @@
 package MainMenu;
 
+import Core.CommandOrTextHandler;
 import Core.KeyPressHandler;
 import Core.CommandHandler;
 import Core.KeyConstants;
@@ -40,5 +41,10 @@ public class MenuKeyPressHandler extends CommandHandler {
         initialCommands.add("Options");
         initialCommands.add("Exit");
         return initialCommands;
+    }
+
+    @Override
+    public CommandOrTextHandler newHandlerFrom() {
+        return new MenuKeyPressHandler();
     }
 }

@@ -1,10 +1,13 @@
 import Core.BasicGui;
 import Core.CommandOrTextHandler;
+import Core.KeyConstants;
 import MainMenu.WelcomeMessenger;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Optional;
+import java.util.Stack;
 import java.util.logging.Logger;
 
 /**
@@ -16,6 +19,7 @@ public class GameLoop {
     private final static Logger LOGGER = Logger.getLogger(GameLoop.class.getName());
 
     private CommandOrTextHandler handler;
+    private Stack<CommandOrTextHandler> previousHandlers = new Stack<>();
 
     public GameLoop(BasicGui gui) {
         this.gui = gui;
@@ -32,15 +36,25 @@ public class GameLoop {
 
     private class CommandKeyListener extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
+            LOGGER.info("Got key press " + KeyEvent.getKeyText(e.getKeyCode()));
             performActionFor(e.getKeyCode());
         }
     }
 
     private void performActionFor(int keyCode) {
-        LOGGER.info("Performing action for: " + KeyEvent.getKeyText(keyCode));
-        handler.performKeyPress(keyCode);
-        if (handler.nextCommand().isPresent()) {
-            setCurrentCommandHandler(handler.nextCommand().get());
+        if (keyCode == KeyConstants.PREVIOUS_MENU) {
+            if (!previousHandlers.isEmpty()) {
+                handler = previousHandlers.pop();
+                LOGGER.info("Previous handler present. Switching to: " + handler.getClass());
+            }
+        } else {
+            handler.performKeyPress(keyCode);
+            if (handler.nextCommand().isPresent()) {
+                CommandOrTextHandler nextCommand = handler.nextCommand().get();
+                LOGGER.info("Handler has next command. Switching to: " + nextCommand.getClass());
+                previousHandlers.push(handler.newHandlerFrom());
+                setCurrentCommandHandler(handler.nextCommand().get());
+            }
         }
         gui.setText(handler.currentText());
     }

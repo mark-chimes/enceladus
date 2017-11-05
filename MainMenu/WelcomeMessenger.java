@@ -1,5 +1,6 @@
 package MainMenu;
 
+import Core.CommandOrTextHandler;
 import Core.KeyConstants;
 import Core.TextHandler;
 
@@ -21,6 +22,11 @@ public class WelcomeMessenger extends TextHandler {
         if (keyCode == KeyConstants.SKIP_TEXT) {
             setNextCommand(new MenuKeyPressHandler());
         }
+    }
+
+    @Override
+    public CommandOrTextHandler newHandlerFrom() {
+        return new WelcomeMessenger();
     }
 
     public ArrayList<String> welcomeMessage() {

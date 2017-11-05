@@ -1,6 +1,8 @@
 package Game;
 
+import Core.CommandOrTextHandler;
 import Core.KeyConstants;
+import Core.KeyPressHandler;
 import Core.TextHandler;
 
 import java.awt.event.KeyEvent;
@@ -21,6 +23,11 @@ public class NewGameMessenger extends TextHandler {
         if (keyCode == KeyConstants.SKIP_TEXT) {
             setNextCommand(new MainGameHandler());
         }
+    }
+
+    @Override
+    public CommandOrTextHandler newHandlerFrom() {
+        return new NewGameMessenger();
     }
 
     public ArrayList<String> welcomeMessage() {
