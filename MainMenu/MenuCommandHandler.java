@@ -3,7 +3,8 @@ package MainMenu;
 import Core.CommandHandler;
 import Core.ItemHandler;
 import Core.KeyConstants;
-import MainMenu.WelcomeMessenger;
+import Game.MainGameHandler;
+import Game.NewGameMessenger;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -23,6 +24,9 @@ public class MenuCommandHandler extends ItemHandler {
         super.performActionFor(keyCode);
         if (keyCode == KeyConstants.CONFIRM) {
             switch (currentText()) {
+                case "New Game" :
+                    setNextCommand(new NewGameMessenger());
+                    break;
                 case "Instructions":
                     setNextCommand(new WelcomeMessenger());
                     break;

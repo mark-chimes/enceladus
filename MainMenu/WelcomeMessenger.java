@@ -34,6 +34,7 @@ public class WelcomeMessenger extends MessageHandler {
         String selectItem = KeyEvent.getKeyText(KeyConstants.CONFIRM);
 
         String previousMenu = KeyEvent.getKeyText(KeyConstants.PREVIOUS_MENU);
+
         welcomeMessage.add(MessageFormat.format("Welcome to Enceladus! Press {0} and {1} to read, " +
                 "and {2} to skip.", previousText, nextText, skipText));
         welcomeMessage.add(MessageFormat.format("Whilst in a menu, press {0} and {1} to change options, " +
@@ -41,7 +42,6 @@ public class WelcomeMessenger extends MessageHandler {
         welcomeMessage.add(MessageFormat.format("You can also press {0} to go to the previous menu.",
                 previousMenu));
         welcomeMessage.add("If this is your first time playing, please read the instructions.");
-        welcomeMessage.add(MessageFormat.format("End of text. Press {0} to continue.", selectItem));
         return welcomeMessage;
     }
 }

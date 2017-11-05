@@ -3,6 +3,8 @@ package Core;
 import Core.ItemOrMessageHandler;
 import Core.TextIterator;
 
+import java.awt.event.KeyEvent;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,8 @@ public abstract class MessageHandler extends ItemOrMessageHandler {
     private Optional<ItemOrMessageHandler> nextCommand = Optional.empty();
 
     protected void setIteratorMessages(List<String> messages) {
+        String skip = KeyEvent.getKeyText(KeyConstants.SKIP_TEXT);
+        messages.add(MessageFormat.format("End of text. Press {0} to continue.", skip));
         setTextOrItemIterator(new TextIterator(messages));
     }
 
