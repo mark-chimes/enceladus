@@ -1,3 +1,10 @@
+package MainMenu;
+
+import Core.CommandHandler;
+import Core.ItemHandler;
+import Core.KeyConstants;
+import MainMenu.WelcomeMessenger;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -19,6 +26,8 @@ public class MenuCommandHandler extends ItemHandler {
                 case "Instructions":
                     setNextCommand(new WelcomeMessenger());
                     break;
+                case "Exit":
+                    System.exit(0);
             }
         }
     }

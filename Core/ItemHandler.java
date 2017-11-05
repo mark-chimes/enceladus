@@ -1,3 +1,8 @@
+package Core;
+
+import Core.ItemIterator;
+import Core.ItemOrMessageHandler;
+
 import java.util.List;
 
 /**

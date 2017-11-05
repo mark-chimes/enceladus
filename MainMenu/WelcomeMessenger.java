@@ -1,3 +1,8 @@
+package MainMenu;
+
+import Core.KeyConstants;
+import Core.MessageHandler;
+
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -5,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-class WelcomeMessenger extends MessageHandler {
+public class WelcomeMessenger extends MessageHandler {
     public WelcomeMessenger() {
         setIteratorMessages(welcomeMessage());
     }

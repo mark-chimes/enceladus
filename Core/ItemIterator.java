@@ -1,7 +1,9 @@
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+package Core;
+
+import Core.KeyConstants;
+import Core.TextOrItemIterator;
+
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Mark Chimes on 2017/11/05.

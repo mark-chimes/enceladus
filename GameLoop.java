@@ -1,8 +1,10 @@
+import Core.BasicGui;
+import Core.ItemOrMessageHandler;
+import MainMenu.WelcomeMessenger;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.MessageFormat;
-import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -48,10 +50,4 @@ public class GameLoop {
         this.handler = handler;
         gui.setText(handler.currentText());
     }
-
-
-
-
-
-
 }

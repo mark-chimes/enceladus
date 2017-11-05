@@ -1,3 +1,8 @@
+package Core;
+
+import Core.ItemOrMessageHandler;
+import Core.TextIterator;
+
 import java.util.List;
 import java.util.Optional;
 
