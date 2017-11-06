@@ -69,57 +69,77 @@ public class GameLoop {
 
     private void performActionFor(int keyCode) {
         if (keyCode == KeyConstants.SWITCH_TEXT_COMMAND) {
-            if (isInCommandState) {
-                LOGGER.info("In command state. Pushing handler: " + handler.getClass());
-                previousCommands.push(handler);
-                setCommandHandlerToMessageLog();
-            } else {
-                LOGGER.info("Is not in command state.");
-                setCommandHandlerToLastCommand();
-            }
+            switchText();
         } else if (keyCode == KeyConstants.SKIP_TEXT && !isInCommandState)  {
-            LOGGER.info("Is not in command state.");
-            setCommandHandlerToLastCommand();
+            skipText();
         }else if (keyCode == KeyConstants.PREVIOUS_MENU) {
-            if (!previousCommands.isEmpty()) {
-                setCurrentCommandHandler(previousCommands.pop());
-                LOGGER.info("Previous handler present. Switching to: " + handler.getClass());
-            } else {
-                LOGGER.info("Command stack empty.");
-            }
+            goToPreviousMenu();
         } else if (keyCode == KeyConstants.HELP) {
-            Optional<List<String>> helpText = handler.getHelpText();
-            if (helpText.isPresent()) {
-                LOGGER.info("Pushing " + handler.getClass() + " to stack.");
-                previousCommands.push(((CommandHandler) handler).newHandlerFrom());
-                LOGGER.info("Switching to help text for: " + handler.getClass());
-                addTextsAndDisplay(helpText.get());
-            }
+            displayHelpForCurrentCommand();
         } else {
-            handler.performKeyPress(keyCode);
-            List<String> nextMessage = handler.getNextMessage();
-            Optional<CommandOrMessageHandler> nextCommandOpt = handler.nextCommand();
-
-            if (nextCommandOpt.isPresent()) {
-                CommandOrMessageHandler nextCommand = nextCommandOpt.get();
-                LOGGER.info("Handler has next command: " + nextCommand.getClass());
-                LOGGER.info("Pushing " + handler.getClass() + " to stack.");
-                previousCommands.push(((CommandHandler) handler).newHandlerFrom());
-                LOGGER.info("Setting to " + nextCommand.getClass());
-                setCurrentCommandHandler(handler.nextCommand().get());
-            } else {
-                LOGGER.info("Handler has NO next command.");
-            }
-            if (nextMessage.isEmpty()) {
-                LOGGER.info("Handler has no next message.");
-            } else {
-                LOGGER.info("Handler has next message so pushing " + handler.getClass() + " to queue.");
-                previousCommands.push(((CommandHandler) handler).newHandlerFrom());
-                LOGGER.info("Handler has next message so adding message to queue.");
-                addTextsAndDisplay(nextMessage);
-            }
+            performMiscKeyPress(keyCode);
         }
         gui.setText(handler.currentText());
+    }
+
+    private void switchText() {
+        if (isInCommandState) {
+            LOGGER.info("In command state. Pushing handler: " + handler.getClass());
+            previousCommands.push(handler);
+            setCommandHandlerToMessageLog();
+        } else {
+            LOGGER.info("Is not in command state.");
+            setCommandHandlerToLastCommand();
+        }
+    }
+
+    private void skipText() {
+        LOGGER.info("Is not in command state.");
+        setCommandHandlerToLastCommand();
+    }
+
+    private void goToPreviousMenu() {
+        if (!previousCommands.isEmpty()) {
+            setCurrentCommandHandler(previousCommands.pop());
+            LOGGER.info("Previous handler present. Switching to: " + handler.getClass());
+        } else {
+            LOGGER.info("Command stack empty.");
+        }
+    }
+
+    private void displayHelpForCurrentCommand() {
+        Optional<List<String>> helpText = handler.getHelpText();
+        if (helpText.isPresent()) {
+            LOGGER.info("Pushing " + handler.getClass() + " to stack.");
+            previousCommands.push(((CommandHandler) handler).newHandlerFrom());
+            LOGGER.info("Switching to help text for: " + handler.getClass());
+            addTextsAndDisplay(helpText.get());
+        }
+    }
+
+    private void performMiscKeyPress(int keyCode) {
+        handler.performKeyPress(keyCode);
+        List<String> nextMessage = handler.getNextMessage();
+        Optional<CommandOrMessageHandler> nextCommandOpt = handler.nextCommand();
+
+        if (nextCommandOpt.isPresent()) {
+            CommandOrMessageHandler nextCommand = nextCommandOpt.get();
+            LOGGER.info("Handler has next command: " + nextCommand.getClass());
+            LOGGER.info("Pushing " + handler.getClass() + " to stack.");
+            previousCommands.push(((CommandHandler) handler).newHandlerFrom());
+            LOGGER.info("Setting to " + nextCommand.getClass());
+            setCurrentCommandHandler(handler.nextCommand().get());
+        } else {
+            LOGGER.info("Handler has NO next command.");
+        }
+        if (nextMessage.isEmpty()) {
+            LOGGER.info("Handler has no next message.");
+        } else {
+            LOGGER.info("Handler has next message so pushing " + handler.getClass() + " to queue.");
+            previousCommands.push(((CommandHandler) handler).newHandlerFrom());
+            LOGGER.info("Handler has next message so adding message to queue.");
+            addTextsAndDisplay(nextMessage);
+        }
     }
 
     private void addTextsAndDisplay(List<String> newTexts) {
