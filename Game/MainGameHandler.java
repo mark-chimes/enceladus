@@ -1,11 +1,11 @@
 package Game;
 
-import Core.CommandOrMessageHandler;
 import Core.CommandHandler;
 import Locations.LocationsHandler;
 import People.PeopleHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -45,7 +45,12 @@ public class MainGameHandler extends CommandHandler {
     }
 
     @Override
-    public CommandOrMessageHandler newHandlerFrom() {
+    public List<String> getHelpText() {
+        return new ArrayList<>(); // TODO
+    }
+
+    @Override
+    public CommandHandler newHandlerFrom() {
         return new MainGameHandler();
     }
 }

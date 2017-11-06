@@ -1,9 +1,9 @@
 package People;
 
 import Core.CommandHandler;
-import Core.CommandOrMessageHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
@@ -31,7 +31,12 @@ public class PeopleHandler extends CommandHandler {
     }
 
     @Override
-    public CommandOrMessageHandler newHandlerFrom() {
+    public List<String> getHelpText() {
+        return new ArrayList<>(); // TODO
+    }
+
+    @Override
+    public CommandHandler newHandlerFrom() {
         return new PeopleHandler();
     }
 }

@@ -1,10 +1,10 @@
 package Locations;
 
 import Core.CommandHandler;
-import Core.CommandOrMessageHandler;
 import Locations.MainBase.MainBaseHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
@@ -32,7 +32,12 @@ public class LocationsHandler extends CommandHandler {
     }
 
     @Override
-    public CommandOrMessageHandler newHandlerFrom() {
+    public CommandHandler newHandlerFrom() {
         return new LocationsHandler();
+    }
+
+    @Override
+    public List<String> getHelpText() {
+        return new ArrayList<>(); // TODO
     }
 }

@@ -1,6 +1,5 @@
 package MainMenu;
 
-import Core.CommandOrMessageHandler;
 import Core.KeyPressHandler;
 import Core.CommandHandler;
 import Game.MainGameHandler;
@@ -9,12 +8,13 @@ import Game.NewGameMessenger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
 public class MenuKeyPressHandler extends CommandHandler {
-    Optional<KeyPressHandler> nextCommand = Optional.empty();
+    private final static Logger LOGGER = Logger.getLogger(CommandHandler.class.getName());
 
     public MenuKeyPressHandler() {
         setIteratorMessages(initialCommands());
@@ -22,6 +22,7 @@ public class MenuKeyPressHandler extends CommandHandler {
 
     @Override
     public void performActionFor(String actionString) {
+        LOGGER.info("Performing action for: " + actionString);
         switch (actionString) {
             case "New Game" :
                 setNextMessage(newGameMessage());
@@ -50,7 +51,7 @@ public class MenuKeyPressHandler extends CommandHandler {
     }
 
     @Override
-    public CommandOrMessageHandler newHandlerFrom() {
+    public CommandHandler newHandlerFrom() {
         return new MenuKeyPressHandler();
     }
 
@@ -66,7 +67,7 @@ public class MenuKeyPressHandler extends CommandHandler {
     }
 
     @Override
-    public Optional<List<String>> getHelpText() {
+    public List<String> getHelpText() {
         List<String> helpText = new ArrayList<>();
         switch(currentText()) {
             case "New Game" :
@@ -85,6 +86,6 @@ public class MenuKeyPressHandler extends CommandHandler {
                 helpText.add("Quits the game completely.");
                 break;
         }
-        return Optional.of(helpText);
+        return helpText;
     }
 }
