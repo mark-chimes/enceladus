@@ -21,7 +21,7 @@ public class GameLoop {
     private CommandHandler handler;
     private MessageLogHandler messageLogHandler;
 
-    private boolean isInCommandState;
+    private boolean isInCommandState = false;
     private boolean isGameRunning;
 
     private Stack<CommandHandler> previousCommands = new Stack<>();
@@ -42,6 +42,7 @@ public class GameLoop {
         setToMessageState();
 
         handler = new MenuKeyPressHandler();
+        previousCommands.push(handler);
         isGameRunning = true;
         runMainLoop();
     }
@@ -73,23 +74,18 @@ public class GameLoop {
         LOGGER.info("Performing action for: " + KeyEvent.getKeyText(keyCode));
         if (keyCode == KeyConstants.SWITCH_TEXT_COMMAND) {
             LOGGER.info("Case switchText");
-
             switchText();
         } else if (keyCode == KeyConstants.SKIP_TEXT)  {
             LOGGER.info("Case skipText");
-
             skipText();
         }else if (keyCode == KeyConstants.PREVIOUS_MENU) {
             LOGGER.info("Case goToPreviousMenu");
-
             goToPreviousMenu();
         } else if (keyCode == KeyConstants.HELP) {
             LOGGER.info("Case displayHelpForCurrentCommand");
-
             displayHelpForCurrentCommand();
         } else {
             LOGGER.info("Case performMiscKeyPress");
-
             performMiscKeyPress(keyCode);
         }
 
@@ -106,7 +102,7 @@ public class GameLoop {
             setToMessageState();
         } else {
             LOGGER.info("Is not in command state.");
-            setCommandHandlerToLastCommand();
+            setToCommandState();
         }
     }
 
@@ -175,6 +171,7 @@ public class GameLoop {
                 addTextsAndDisplay(nextMessage);
             }
         } else {
+            LOGGER.info("Not in command state");
             messageLogHandler.performKeyPress(keyCode);
         }
     }
@@ -186,20 +183,20 @@ public class GameLoop {
     }
 
     private void setToMessageState() {
-        LOGGER.info("Setting command state to message log handler.");
+        LOGGER.info("Setting to message state.");
         isInCommandState = false;
         gui.setText(messageLogHandler.currentText());
     }
 
     private void setToCommandState() {
-        LOGGER.info("Setting current command handler to: " + handler.getClass());
+        LOGGER.info("Setting to command state.");
         isInCommandState = true;
         gui.setText(handler.currentText());
     }
 
     private void setCommandHandlerToLastCommand() {
         if (!previousCommands.isEmpty()) {
-            isInCommandState = true;
+            setToCommandState();
             this.handler = previousCommands.pop();
             LOGGER.info("Setting current command handler to: " + handler.getClass());
             gui.setText(handler.currentText());
@@ -210,7 +207,7 @@ public class GameLoop {
 
     private void setCurrentCommandHandler(CommandHandler handler) {
         LOGGER.info("Setting current command handler to: " + handler.getClass());
-        isInCommandState = true;
+        setToCommandState();
         this.handler = handler;
         gui.setText(handler.currentText());
     }
