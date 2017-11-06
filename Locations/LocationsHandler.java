@@ -2,6 +2,7 @@ package Locations;
 
 import Core.CommandHandler;
 import Core.CommandOrTextHandler;
+import Locations.MainBase.MainBaseHandler;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ public class LocationsHandler extends CommandHandler {
     public void performActionFor(String actionString) {
         switch (actionString) {
             case "Main Base":
+                setNextCommand(new MainBaseHandler());
                 break;
             case "The Wild Beyond":
                 break;
