@@ -28,9 +28,12 @@ public class MenuKeyPressHandler extends CommandHandler {
                 setNextCommand(new MainGameHandler()); // TODO
                 break;
                 // TODO Figure out how to do this...
-//            case "Instructions":
-//                setNextCommand(new WelcomeMessenger());
-//                break;
+            case "Instructions":
+                List<String> nextMessage = new ArrayList<>();
+                nextMessage.add("Instructions forthcoming."); // TODO
+                this.setNextMessage(nextMessage);
+                this.clearNextCommand();
+                break;
             case "Exit":
                 System.exit(0);
         }
