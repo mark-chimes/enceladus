@@ -3,12 +3,11 @@ package Core;
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by Mark Chimes on 2017/11/06.
  */
-public class MessageLogIterator implements CommandOrTextIterator {
+public class MessageLogIterator implements CommandOrMessageIterator {
     private final List<String> texts;
     private int iteratorIndex;
 
@@ -35,10 +34,6 @@ public class MessageLogIterator implements CommandOrTextIterator {
 
     public void setToLastIndex() {
         iteratorIndex = texts.size();
-    }
-
-    public void setIndex(int newIndex) {
-        iteratorIndex = newIndex; // TODO throw exception
     }
 
     public int currentIndex() { return iteratorIndex; }

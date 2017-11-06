@@ -1,20 +1,15 @@
 package Core;
 
-import javax.swing.text.html.Option;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public abstract class CommandOrTextHandler implements KeyPressHandler {
-    private final static Logger LOGGER = Logger.getLogger(CommandOrTextHandler.class.getName());
-
-    protected CommandOrTextIterator iterator;
-    protected Optional<CommandOrTextHandler> nextCommand = Optional.empty();
+public abstract class CommandOrMessageHandler implements KeyPressHandler {
+    protected CommandOrMessageIterator iterator;
+    protected Optional<CommandOrMessageHandler> nextCommand = Optional.empty();
     protected List<String> nextMessage = new ArrayList<>();
 
     @Override
@@ -32,15 +27,15 @@ public abstract class CommandOrTextHandler implements KeyPressHandler {
         return iterator.currentIndex();
     }
 
-    protected void setTextOrItemIterator(CommandOrTextIterator iterator) {
+    protected void setTextOrItemIterator(CommandOrMessageIterator iterator) {
         this.iterator = iterator;
     }
 
-    public Optional<CommandOrTextHandler> nextCommand() {
+    public Optional<CommandOrMessageHandler> nextCommand() {
         return nextCommand;
     }
 
-    protected void setNextCommand(CommandOrTextHandler newCommand) {
+    protected void setNextCommand(CommandOrMessageHandler newCommand) {
         nextCommand = Optional.ofNullable(newCommand);
     }
 
@@ -55,8 +50,6 @@ public abstract class CommandOrTextHandler implements KeyPressHandler {
     protected void setNextMessage(List<String> nextMessage) {
         this.nextMessage = nextMessage;
     }
-
-    public abstract CommandOrTextHandler newHandlerFrom();
 
     public Optional<List<String>> getHelpText() {
         return Optional.empty();

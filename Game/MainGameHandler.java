@@ -1,6 +1,6 @@
 package Game;
 
-import Core.CommandOrTextHandler;
+import Core.CommandOrMessageHandler;
 import Core.CommandHandler;
 import Locations.LocationsHandler;
 import People.PeopleHandler;
@@ -45,7 +45,7 @@ public class MainGameHandler extends CommandHandler {
     }
 
     @Override
-    public CommandOrTextHandler newHandlerFrom() {
+    public CommandOrMessageHandler newHandlerFrom() {
         return new MainGameHandler();
     }
 }

@@ -1,8 +1,7 @@
 package People;
 
 import Core.CommandHandler;
-import Core.CommandOrTextHandler;
-import Locations.LocationsHandler;
+import Core.CommandOrMessageHandler;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,7 @@ public class PeopleHandler extends CommandHandler {
     }
 
     @Override
-    public CommandOrTextHandler newHandlerFrom() {
+    public CommandOrMessageHandler newHandlerFrom() {
         return new PeopleHandler();
     }
 }

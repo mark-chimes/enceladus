@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public abstract class CommandHandler extends CommandOrTextHandler {
+public abstract class CommandHandler extends CommandOrMessageHandler {
     protected void setIteratorMessages(List<String> messages) {
         setTextOrItemIterator(new CommandIterator(messages));
     }
@@ -16,6 +16,8 @@ public abstract class CommandHandler extends CommandOrTextHandler {
             performActionFor(currentText());
         }
     }
+
+    public abstract CommandOrMessageHandler newHandlerFrom();
 
     protected abstract void performActionFor(String commandString);
 }

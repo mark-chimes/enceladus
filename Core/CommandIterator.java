@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class CommandIterator implements CommandOrTextIterator {
+public class CommandIterator implements CommandOrMessageIterator {
     private final List<String> items;
     private int iteratorIndex;
 

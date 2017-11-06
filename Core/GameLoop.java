@@ -18,12 +18,12 @@ public class GameLoop {
     private CommandKeyListener keyListener;
     private final static Logger LOGGER = Logger.getLogger(GameLoop.class.getName());
 
-    private CommandOrTextHandler handler;
+    private CommandOrMessageHandler handler;
     private boolean isInCommandState;
     private boolean isGameRunning;
     private MessageLogHandler messageLogHandler;
 
-    private Stack<CommandOrTextHandler> previousCommands = new Stack<>();
+    private Stack<CommandOrMessageHandler> previousCommands = new Stack<>();
 
     private LinkedBlockingDeque<Integer> keyPresses = new LinkedBlockingDeque<>();
 
@@ -91,20 +91,20 @@ public class GameLoop {
             Optional<List<String>> helpText = handler.getHelpText();
             if (helpText.isPresent()) {
                 LOGGER.info("Pushing " + handler.getClass() + " to stack.");
-                previousCommands.push(handler.newHandlerFrom());
+                previousCommands.push(((CommandHandler) handler).newHandlerFrom());
                 LOGGER.info("Switching to help text for: " + handler.getClass());
                 addTextsAndDisplay(helpText.get());
             }
         } else {
             handler.performKeyPress(keyCode);
             List<String> nextMessage = handler.getNextMessage();
-            Optional<CommandOrTextHandler> nextCommandOpt = handler.nextCommand();
+            Optional<CommandOrMessageHandler> nextCommandOpt = handler.nextCommand();
 
             if (nextCommandOpt.isPresent()) {
-                CommandOrTextHandler nextCommand = nextCommandOpt.get();
+                CommandOrMessageHandler nextCommand = nextCommandOpt.get();
                 LOGGER.info("Handler has next command: " + nextCommand.getClass());
                 LOGGER.info("Pushing " + handler.getClass() + " to stack.");
-                previousCommands.push(handler.newHandlerFrom());
+                previousCommands.push(((CommandHandler) handler).newHandlerFrom());
                 LOGGER.info("Setting to " + nextCommand.getClass());
                 setCurrentCommandHandler(handler.nextCommand().get());
             } else {
@@ -114,7 +114,7 @@ public class GameLoop {
                 LOGGER.info("Handler has no next message.");
             } else {
                 LOGGER.info("Handler has next message so pushing " + handler.getClass() + " to queue.");
-                previousCommands.push(handler.newHandlerFrom());
+                previousCommands.push(((CommandHandler) handler).newHandlerFrom());
                 LOGGER.info("Handler has next message so adding message to queue.");
                 addTextsAndDisplay(nextMessage);
             }
@@ -146,7 +146,7 @@ public class GameLoop {
         }
     }
 
-    private void setCurrentCommandHandler(CommandOrTextHandler handler) {
+    private void setCurrentCommandHandler(CommandOrMessageHandler handler) {
         LOGGER.info("Setting current command handler to: " + handler.getClass());
         isInCommandState = true;
         this.handler = handler;

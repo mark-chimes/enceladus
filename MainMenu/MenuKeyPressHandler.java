@@ -1,6 +1,6 @@
 package MainMenu;
 
-import Core.CommandOrTextHandler;
+import Core.CommandOrMessageHandler;
 import Core.KeyPressHandler;
 import Core.CommandHandler;
 import Game.MainGameHandler;
@@ -50,7 +50,7 @@ public class MenuKeyPressHandler extends CommandHandler {
     }
 
     @Override
-    public CommandOrTextHandler newHandlerFrom() {
+    public CommandOrMessageHandler newHandlerFrom() {
         return new MenuKeyPressHandler();
     }
 

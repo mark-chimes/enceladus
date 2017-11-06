@@ -1,7 +1,7 @@
 package Locations.MainBase;
 
 import Core.CommandHandler;
-import Core.CommandOrTextHandler;
+import Core.CommandOrMessageHandler;
 import Locations.LocationsHandler;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class MainBaseHandler extends CommandHandler{
     }
 
     @Override
-    public CommandOrTextHandler newHandlerFrom() {
+    public CommandOrMessageHandler newHandlerFrom() {
         return new LocationsHandler();
     }
 }
