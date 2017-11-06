@@ -1,8 +1,7 @@
 package MainMenu;
 
-import Core.CommandOrTextHandler;
 import Core.KeyConstants;
-import Core.TextHandler;
+import Core.MessageLogIterator;
 
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
@@ -11,22 +10,10 @@ import java.util.ArrayList;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class WelcomeMessenger extends TextHandler {
+public class WelcomeMessenger extends MessageLogIterator {
     public WelcomeMessenger() {
-        setIteratorMessages(welcomeMessage());
-    }
-
-    @Override
-    public void performKeyPress(int keyCode) {
-        super.performKeyPress(keyCode);
-        if (keyCode == KeyConstants.SKIP_TEXT) {
-            setNextCommand(new MenuKeyPressHandler());
-        }
-    }
-
-    @Override
-    public CommandOrTextHandler newHandlerFrom() {
-        return new WelcomeMessenger();
+        super(new ArrayList<>());
+        super.addTexts(welcomeMessage());
     }
 
     public ArrayList<String> welcomeMessage() {

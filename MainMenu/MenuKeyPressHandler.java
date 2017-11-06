@@ -26,9 +26,10 @@ public class MenuKeyPressHandler extends CommandHandler {
             case "New Game" :
                 setNextCommand(new NewGameMessenger());
                 break;
-            case "Instructions":
-                setNextCommand(new WelcomeMessenger());
-                break;
+                // TODO Figure out how to do this...
+//            case "Instructions":
+//                setNextCommand(new WelcomeMessenger());
+//                break;
             case "Exit":
                 System.exit(0);
         }
