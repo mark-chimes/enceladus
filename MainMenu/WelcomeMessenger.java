@@ -27,13 +27,20 @@ public class WelcomeMessenger extends MessageLogIterator {
         String selectItem = KeyEvent.getKeyText(KeyConstants.CONFIRM);
 
         String previousMenu = KeyEvent.getKeyText(KeyConstants.PREVIOUS_MENU);
+        String switchBetween = KeyEvent.getKeyText(KeyConstants.SWITCH_TEXT_COMMAND);
+        String help = KeyEvent.getKeyText(KeyConstants.HELP);
 
         welcomeMessage.add(MessageFormat.format("Welcome to Enceladus! Press {0} and {1} to read, " +
                 "and {2} to skip.", previousText, nextText, skipText));
-        welcomeMessage.add(MessageFormat.format("Whilst in a menu, press {0} and {1} to change options, " +
+
+        welcomeMessage.add(MessageFormat.format("Whilst in a commands menu, press {0} and {1} to change options, " +
                 "and {2} to select.", previousItem, nextItem, selectItem));
-        welcomeMessage.add(MessageFormat.format("You can also press {0} to go to the previous menu.",
-                previousMenu));
+        welcomeMessage.add(MessageFormat.format("Whilst browsing commands, you can also press " +
+                        "{0} to go to the previous menu.", previousMenu));
+        welcomeMessage.add(MessageFormat.format("In many cases, you can get more information about a selected " +
+                "command by pressing {0}.", help));
+        welcomeMessage.add(MessageFormat.format("To switch between the log of messages, and currently " +
+                "available commands, press {0}.", switchBetween));
         welcomeMessage.add("If this is your first time playing, please read the instructions.");
         return welcomeMessage;
     }

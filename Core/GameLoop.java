@@ -81,8 +81,10 @@ public class GameLoop {
             setCommandHandlerToLastCommand();
         }else if (keyCode == KeyConstants.PREVIOUS_MENU) {
             if (!previousCommands.isEmpty()) {
-                handler = previousCommands.pop();
+                setCurrentCommandHandler(previousCommands.pop());
                 LOGGER.info("Previous handler present. Switching to: " + handler.getClass());
+            } else {
+                LOGGER.info("Command stack empty.");
             }
         } else if (keyCode == KeyConstants.HELP) {
             Optional<List<String>> helpText = handler.getHelpText();
@@ -128,6 +130,7 @@ public class GameLoop {
 
     private void setCurrentCommandHandler(CommandOrTextHandler handler) {
         LOGGER.info("Setting current command handler to: " + handler.getClass());
+        isInCommandState = true;
         this.handler = handler;
         gui.setText(handler.currentText());
     }

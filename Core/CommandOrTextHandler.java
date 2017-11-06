@@ -16,7 +16,6 @@ public abstract class CommandOrTextHandler implements KeyPressHandler {
 
     @Override
     public void performKeyPress(int keyCode) {
-        LOGGER.info("Got key press " + KeyEvent.getKeyText(keyCode));
         iterator.performKeyPress(keyCode);
     }
 
