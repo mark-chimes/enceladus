@@ -18,4 +18,6 @@ public class KeyConstants {
 
     public static final int HELP = KeyEvent.VK_F1;
 
+    public static final int SWITCH_TEXT_COMMAND = KeyEvent.VK_TAB;
+
 }

@@ -1,6 +1,5 @@
-import Core.BasicGui;
-import Core.CommandOrTextHandler;
-import Core.KeyConstants;
+package Core;
+
 import MainMenu.WelcomeMessenger;
 
 import java.awt.EventQueue;
@@ -20,7 +19,8 @@ public class GameLoop {
     private final static Logger LOGGER = Logger.getLogger(GameLoop.class.getName());
 
     private CommandOrTextHandler handler;
-    private Stack<CommandOrTextHandler> previousHandlers = new Stack<>();
+    private MessageLogHandler messageLogReader;
+    private Stack<CommandOrTextHandler> previousCommands = new Stack<>();
 
     public GameLoop(BasicGui gui) {
         this.gui = gui;
@@ -43,18 +43,20 @@ public class GameLoop {
     }
 
     private void performActionFor(int keyCode) {
-        if (keyCode == KeyConstants.PREVIOUS_MENU) {
-            if (!previousHandlers.isEmpty()) {
-                handler = previousHandlers.pop();
+        if (keyCode == KeyConstants.SWITCH_TEXT_COMMAND) {
+            // TODO switch display between text log and possible commands
+        } else if (keyCode == KeyConstants.PREVIOUS_MENU) {
+            if (!previousCommands.isEmpty()) {
+                handler = previousCommands.pop();
                 LOGGER.info("Previous handler present. Switching to: " + handler.getClass());
             }
         } else if (keyCode == KeyConstants.HELP) {
             Optional<List<String>> helpText = handler.getHelpText();
             if (helpText.isPresent()) {
                 LOGGER.info("Pushing " + handler.getClass() + " to stack.");
-                previousHandlers.push(handler.newHandlerFrom());
+                previousCommands.push(handler.newHandlerFrom());
                 LOGGER.info("Switching to help text for: " + handler.getClass());
-                setCurrentCommandHandler(new HelpTextHandler(helpText.get(), handler, previousHandlers));
+                setCurrentCommandHandler(new HelpTextHandler(helpText.get(), handler, previousCommands));
             }
         } else {
             handler.performKeyPress(keyCode);
@@ -63,7 +65,7 @@ public class GameLoop {
                 LOGGER.info("Handler has next command. Switching to: " + nextCommand.getClass());
                 if (!handler.getClass().equals(HelpTextHandler.class)) {
                     LOGGER.info("Pushing " + handler.getClass() + " to stack.");
-                    previousHandlers.push(handler.newHandlerFrom());
+                    previousCommands.push(handler.newHandlerFrom());
                 }
                 setCurrentCommandHandler(handler.nextCommand().get());
             }
