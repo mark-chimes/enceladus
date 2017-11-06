@@ -1,6 +1,8 @@
 package Core;
 
+import javax.swing.text.html.Option;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -13,6 +15,7 @@ public abstract class CommandOrTextHandler implements KeyPressHandler {
 
     protected CommandOrTextIterator iterator;
     protected Optional<CommandOrTextHandler> nextCommand = Optional.empty();
+    protected List<String> nextMessage = new ArrayList<>();
 
     @Override
     public void performKeyPress(int keyCode) {
@@ -40,6 +43,19 @@ public abstract class CommandOrTextHandler implements KeyPressHandler {
     protected void setNextCommand(CommandOrTextHandler newCommand) {
         nextCommand = Optional.ofNullable(newCommand);
     }
+
+    protected void clearNextCommand() {
+        nextCommand = Optional.empty();
+    }
+
+    public List<String> getNextMessage() {
+        return nextMessage;
+    }
+
+    protected void setNextMessage(List<String> nextMessage) {
+        this.nextMessage = nextMessage;
+    }
+
     public abstract CommandOrTextHandler newHandlerFrom();
 
     public Optional<List<String>> getHelpText() {

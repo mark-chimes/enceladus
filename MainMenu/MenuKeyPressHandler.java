@@ -3,7 +3,7 @@ package MainMenu;
 import Core.CommandOrTextHandler;
 import Core.KeyPressHandler;
 import Core.CommandHandler;
-import Core.KeyConstants;
+import Game.MainGameHandler;
 import Game.NewGameMessenger;
 
 import java.util.ArrayList;
@@ -24,7 +24,8 @@ public class MenuKeyPressHandler extends CommandHandler {
     public void performActionFor(String actionString) {
         switch (actionString) {
             case "New Game" :
-                setNextCommand(new NewGameMessenger());
+                setNextMessage(newGameMessage());
+                setNextCommand(new MainGameHandler()); // TODO
                 break;
                 // TODO Figure out how to do this...
 //            case "Instructions":
@@ -48,6 +49,17 @@ public class MenuKeyPressHandler extends CommandHandler {
     @Override
     public CommandOrTextHandler newHandlerFrom() {
         return new MenuKeyPressHandler();
+    }
+
+    @Override
+    public List<String> getNextMessage() {
+        return nextMessage;
+    }
+
+    private List<String> newGameMessage() {
+        ArrayList<String> newGameMessage = new ArrayList<>();
+        newGameMessage.add("Starting a new game.");
+        return newGameMessage;
     }
 
     @Override

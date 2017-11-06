@@ -92,22 +92,39 @@ public class GameLoop {
                 LOGGER.info("Pushing " + handler.getClass() + " to stack.");
                 previousCommands.push(handler.newHandlerFrom());
                 LOGGER.info("Switching to help text for: " + handler.getClass());
-                messageLogIterator.addTexts(helpText.get());
-                setCommandHandlerToMessageLog();
+                addTextsAndDisplay(helpText.get());
             }
         } else {
             handler.performKeyPress(keyCode);
-            if (handler.nextCommand().isPresent()) {
-                CommandOrTextHandler nextCommand = handler.nextCommand().get();
-                LOGGER.info("Handler has next command. Switching to: " + nextCommand.getClass());
+            List<String> nextMessage = handler.getNextMessage();
+            Optional<CommandOrTextHandler> nextCommandOpt = handler.nextCommand();
+
+            if (nextCommandOpt.isPresent()) {
+                CommandOrTextHandler nextCommand = nextCommandOpt.get();
+                LOGGER.info("Handler has next command: " + nextCommand.getClass());
                 LOGGER.info("Pushing " + handler.getClass() + " to stack.");
                 previousCommands.push(handler.newHandlerFrom());
+                LOGGER.info("Setting to " + nextCommand.getClass());
                 setCurrentCommandHandler(handler.nextCommand().get());
             } else {
                 LOGGER.info("Handler has NO next command.");
             }
+            if (nextMessage.isEmpty()) {
+                LOGGER.info("Handler has no next message.");
+            } else {
+                LOGGER.info("Handler has next message so pushing " + handler.getClass() + " to queue.");
+                previousCommands.push(handler.newHandlerFrom());
+                LOGGER.info("Handler has next message so adding message to queue.");
+                addTextsAndDisplay(nextMessage);
+            }
         }
         gui.setText(handler.currentText());
+    }
+
+    private void addTextsAndDisplay(List<String> newTexts) {
+        messageLogIterator.setToLastIndex();
+        messageLogIterator.addTexts(newTexts);
+        setCommandHandlerToMessageLog();
     }
 
     private void setCommandHandlerToMessageLog() {
@@ -133,17 +150,5 @@ public class GameLoop {
         isInCommandState = true;
         this.handler = handler;
         gui.setText(handler.currentText());
-    }
-
-    private class MessageLogHandler extends CommandOrTextHandler {
-        public MessageLogHandler(MessageLogIterator messageLogs) {
-            super();
-            setTextOrItemIterator(messageLogs);
-        }
-
-        @Override
-        public CommandOrTextHandler newHandlerFrom() {
-            return null; // TODO remove
-        }
     }
 }

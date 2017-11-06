@@ -2,6 +2,7 @@ package Game;
 
 import Core.CommandOrTextHandler;
 import Core.KeyConstants;
+import Core.MessageLogIterator;
 import Core.TextHandler;
 
 import java.awt.event.KeyEvent;
@@ -13,22 +14,10 @@ import java.util.Optional;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class NewGameMessenger extends TextHandler {
+public class NewGameMessenger extends MessageLogIterator {
     public NewGameMessenger() {
-        setIteratorMessages(welcomeMessage());
-    }
-
-    @Override
-    public void performKeyPress(int keyCode) {
-        super.performKeyPress(keyCode);
-        if (keyCode == KeyConstants.SKIP_TEXT) {
-            setNextCommand(new MainGameHandler());
-        }
-    }
-
-    @Override
-    public CommandOrTextHandler newHandlerFrom() {
-        return new NewGameMessenger();
+        super(new ArrayList<>());
+        super.addTexts(welcomeMessage());
     }
 
     public ArrayList<String> welcomeMessage() {

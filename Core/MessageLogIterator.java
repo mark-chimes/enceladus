@@ -33,6 +33,14 @@ public class MessageLogIterator implements CommandOrTextIterator {
         }
     }
 
+    public void setToLastIndex() {
+        iteratorIndex = texts.size();
+    }
+
+    public void setIndex(int newIndex) {
+        iteratorIndex = newIndex; // TODO throw exception
+    }
+
     public int currentIndex() { return iteratorIndex; }
 
     public void performKeyPress(int action) {
