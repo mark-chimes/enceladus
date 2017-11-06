@@ -21,7 +21,8 @@ public class GameLoop {
     private CommandOrTextHandler handler;
     private boolean isInCommandState;
     private boolean isGameRunning;
-    private MessageLogIterator messageLogIterator;
+    private MessageLogHandler messageLogHandler;
+
     private Stack<CommandOrTextHandler> previousCommands = new Stack<>();
 
     private LinkedBlockingDeque<Integer> keyPresses = new LinkedBlockingDeque<>();
@@ -36,7 +37,7 @@ public class GameLoop {
         });
         this.keyListener = new CommandKeyListener();
         gui.addListener(keyListener);
-        messageLogIterator = new WelcomeMessenger();
+        messageLogHandler = new MessageLogHandler(WelcomeMessenger.welcomeMessage());
         setCommandHandlerToMessageLog();
         previousCommands.push(new MenuKeyPressHandler());
         isGameRunning = true;
@@ -122,15 +123,15 @@ public class GameLoop {
     }
 
     private void addTextsAndDisplay(List<String> newTexts) {
-        messageLogIterator.setToLastIndex();
-        messageLogIterator.addTexts(newTexts);
+        messageLogHandler.setToLastIndex();
+        messageLogHandler.addTexts(newTexts);
         setCommandHandlerToMessageLog();
     }
 
     private void setCommandHandlerToMessageLog() {
         LOGGER.info("Setting current command handler message log handler.");
         isInCommandState = false;
-        this.handler = new MessageLogHandler(messageLogIterator);
+        this.handler = messageLogHandler;
         gui.setText(handler.currentText());
     }
 

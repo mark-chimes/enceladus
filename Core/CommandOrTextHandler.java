@@ -61,4 +61,6 @@ public abstract class CommandOrTextHandler implements KeyPressHandler {
     public Optional<List<String>> getHelpText() {
         return Optional.empty();
     }
+
+
 }

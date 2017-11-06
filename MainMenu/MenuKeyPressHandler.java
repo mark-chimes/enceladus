@@ -61,7 +61,7 @@ public class MenuKeyPressHandler extends CommandHandler {
 
     private List<String> newGameMessage() {
         ArrayList<String> newGameMessage = new ArrayList<>();
-        newGameMessage.add("Starting a new game.");
+        newGameMessage.addAll(NewGameMessenger.message());
         return newGameMessage;
     }
 

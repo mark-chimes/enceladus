@@ -10,13 +10,8 @@ import java.util.ArrayList;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public class WelcomeMessenger extends MessageLogIterator {
-    public WelcomeMessenger() {
-        super(new ArrayList<>());
-        super.addTexts(welcomeMessage());
-    }
-
-    public ArrayList<String> welcomeMessage() {
+public class WelcomeMessenger {
+    public static ArrayList<String> welcomeMessage() {
         ArrayList<String> welcomeMessage = new ArrayList<>();
         String previousText = KeyEvent.getKeyText(KeyConstants.PREVIOUS_TEXT);
         String nextText = KeyEvent.getKeyText(KeyConstants.NEXT_TEXT);
