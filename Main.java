@@ -1,5 +1,5 @@
-import Core.BasicGui;
-import Core.GameLoop;
+import Commands.BasicGui;
+import Commands.CommandLoop;
 
 /**
  * Created by Mark Chimes on 2017/10/31.
@@ -7,7 +7,7 @@ import Core.GameLoop;
 public class Main {
     public static void main(String[] args) {
         BasicGui gui = new BasicGui();
-        GameLoop handler = new GameLoop(gui);
+        CommandLoop handler = new CommandLoop(gui);
         handler.setup();
     }
 }

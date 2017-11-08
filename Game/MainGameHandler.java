@@ -1,6 +1,6 @@
 package Game;
 
-import Core.CommandHandler;
+import Commands.CommandHandler;
 import Locations.LocationsHandler;
 import People.PeopleHandler;
 

@@ -1,7 +1,6 @@
 package Locations.MainBase;
 
-import Core.CommandHandler;
-import Locations.LocationsHandler;
+import Commands.CommandHandler;
 
 import java.util.ArrayList;
 import java.util.List;

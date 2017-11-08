@@ -1,6 +1,6 @@
 package MainMenu;
 
-import Core.CommandHandler;
+import Commands.CommandHandler;
 import Game.MainGameHandler;
 import Game.NewGameMessenger;
 

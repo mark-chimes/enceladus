@@ -1,4 +1,4 @@
-package Core;
+package Commands;
 
 import MainMenu.MenuKeyPressHandler;
 import MainMenu.WelcomeMessenger;
@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 /**
  * Created by Mark Chimes on 2017/11/02.
  */
-public class GameLoop {
+public class CommandLoop {
     private final BasicGui gui;
     private CommandKeyListener keyListener;
-    private final static Logger LOGGER = Logger.getLogger(GameLoop.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(CommandLoop.class.getName());
 
     private CommandHandler handler;
     private MessageLogHandler messageLogHandler;
@@ -28,7 +28,7 @@ public class GameLoop {
 
     private LinkedBlockingDeque<Integer> keyPresses = new LinkedBlockingDeque<>();
 
-    public GameLoop(BasicGui gui) {
+    public CommandLoop(BasicGui gui) {
         this.gui = gui;
     }
 
@@ -75,7 +75,7 @@ public class GameLoop {
     }
 
     private void performActionFor(int keyCode) {
-        LOGGER.info("Performing GameLoop action for: " + KeyEvent.getKeyText(keyCode));
+        LOGGER.info("Performing CommandLoop action for: " + KeyEvent.getKeyText(keyCode));
         if (isInCommandState) {
             LOGGER.info("In command state.");
             performActionForCommand(keyCode);

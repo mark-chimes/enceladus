@@ -1,7 +1,6 @@
 package MainMenu;
 
-import Core.KeyConstants;
-import Core.MessageLogIterator;
+import Commands.KeyConstants;
 
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;

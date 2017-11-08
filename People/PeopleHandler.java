@@ -1,6 +1,6 @@
 package People;
 
-import Core.CommandHandler;
+import Commands.CommandHandler;
 
 import java.util.ArrayList;
 import java.util.List;

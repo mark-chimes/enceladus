@@ -1,4 +1,4 @@
-package Core;
+package Commands;
 
 import javax.swing.*;
 

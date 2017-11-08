@@ -1,6 +1,4 @@
-package Core;
-
-import javafx.scene.input.KeyCode;
+package Commands;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
