@@ -42,8 +42,8 @@ public class MainGameHandler extends CommandHandler {
     }
 
     @Override
-    protected List<String> getDefaultHelpText() {
-        return Arrays.asList("Starts a new game");
+    public List<String> getDefaultHelpText() {
+        return Arrays.asList("Starts a game completely from the beginning.");
     }
 
     private final ArrayList<String> commands() {
@@ -58,5 +58,10 @@ public class MainGameHandler extends CommandHandler {
     @Override
     public List<String> getHelpText() {
         return new ArrayList<>(); // TODO
+    }
+
+    @Override
+    public List<String> getMessageDisplayedByThisCommand() {
+        return Arrays.asList("Starting a new game.");
     }
 }

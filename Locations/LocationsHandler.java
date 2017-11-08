@@ -51,7 +51,7 @@ public class LocationsHandler extends CommandHandler {
     }
 
     @Override
-    protected List<String> getDefaultHelpText() {
+    public List<String> getDefaultHelpText() {
         return Arrays.asList("Displays a list of locations which you have discovered.");
     }
 }

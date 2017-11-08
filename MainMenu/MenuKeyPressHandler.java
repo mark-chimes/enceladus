@@ -28,8 +28,9 @@ public class MenuKeyPressHandler extends CommandHandler {
         LOGGER.info("Performing action for: " + actionString);
         switch (actionString) {
             case "New Game" :
-                setNextMessage(newGameMessage());
-                setNextCommand(new MainGameHandler());
+                CommandHandler mainGameHandler = new MainGameHandler();
+                setNextMessage(mainGameHandler.getMessageDisplayedByThisCommand());
+                setNextCommand(mainGameHandler);
                 LOGGER.info("shouldClearCommandStack");
                 shouldClearCommandStack();
                 break;
@@ -39,7 +40,6 @@ public class MenuKeyPressHandler extends CommandHandler {
                 this.setNextMessage(nextMessage);
                 this.clearNextCommand();
                 LOGGER.info("shouldNotClearCommandStack");
-
                 shouldNotClearCommandStack();
                 break;
             case "Exit":
@@ -78,8 +78,8 @@ public class MenuKeyPressHandler extends CommandHandler {
         List<String> helpText = new ArrayList<>();
         switch(currentText()) {
             case "New Game" :
-                helpText.add("Starts a game completely from the beginning.");
-                break;
+                CommandHandler mainGameHandler = new MainGameHandler();
+                return mainGameHandler.getDefaultHelpText();
             case "Load Game" :
                 helpText.add("Continues a game that was previously played.");
                 break;
@@ -102,7 +102,7 @@ public class MenuKeyPressHandler extends CommandHandler {
     }
 
     @Override
-    protected List<String> getDefaultHelpText() {
+    public List<String> getDefaultHelpText() {
         throw new NotImplementedException();
     }
 }

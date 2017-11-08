@@ -53,7 +53,7 @@ public class MainBaseHandler extends CommandHandler{
     }
 
     @Override
-    protected List<String> getDefaultHelpText() {
+    public List<String> getDefaultHelpText() {
         return Arrays.asList("The main base", "Description forthcoming");
     }
 }

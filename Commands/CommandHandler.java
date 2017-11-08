@@ -79,7 +79,11 @@ public abstract class CommandHandler implements KeyPressHandler {
 
     protected abstract String getDefaultName();
 
-    protected abstract List<String> getDefaultHelpText();
+    public abstract List<String> getDefaultHelpText();
+
+    public List<String> getMessageDisplayedByThisCommand() {
+        return new ArrayList<>();
+    }
 
     public boolean isClearingCommandStack() {
         return isClearingCommandStack;

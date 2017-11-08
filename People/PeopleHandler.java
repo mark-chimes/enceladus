@@ -43,7 +43,7 @@ public class PeopleHandler extends CommandHandler {
     }
 
     @Override
-    protected List<String> getDefaultHelpText() {
+    public List<String> getDefaultHelpText() {
         return Arrays.asList("Shows a list of the survivors about which you know.");
     }
 }
