@@ -4,6 +4,7 @@ import Commands.CommandHandler;
 import Locations.Location;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,6 +45,16 @@ public class MainBaseHandler extends CommandHandler{
     @Override
     public List<String> getHelpText() {
         return new ArrayList<>(); // TODO
+    }
+
+    @Override
+    protected String getDefaultName() {
+        return "Main Base";
+    }
+
+    @Override
+    protected List<String> getDefaultHelpText() {
+        return Arrays.asList("The main base", "Description forthcoming");
     }
 }
 

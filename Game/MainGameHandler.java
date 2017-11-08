@@ -5,6 +5,7 @@ import Locations.LocationsHandler;
 import People.PeopleHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -33,6 +34,16 @@ public class MainGameHandler extends CommandHandler {
                 System.exit(0);
                 break;
         }
+    }
+
+    @Override
+    protected String getDefaultName() {
+        return "New Game";
+    }
+
+    @Override
+    protected List<String> getDefaultHelpText() {
+        return Arrays.asList("Starts a new game");
     }
 
     private final ArrayList<String> commands() {

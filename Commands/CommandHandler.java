@@ -68,25 +68,18 @@ public abstract class CommandHandler implements KeyPressHandler {
     }
 
     public void performKeyPress(int keyCode) {
-        LOGGER.info("Performing CommandHandler keyPress for: " + KeyEvent.getKeyText(keyCode));
-        LOGGER.info("Key code is: " + keyCode);
-        LOGGER.info("Key text for confirm is: " + KeyEvent.getKeyText(KeyConstants.CONFIRM));
-        LOGGER.info("Key code for confirm is: " + KeyConstants.CONFIRM);
-        LOGGER.info("Is keyCode == KeyConstants.CONFIRM? " + (keyCode == KeyConstants.CONFIRM));
-
         if (keyCode == KeyConstants.CONFIRM) {
-            LOGGER.info("Got that keyCode == KeyConstants.CONFIRM");
-            LOGGER.info("Performing CommandHandler Action for: " + KeyEvent.getKeyText(keyCode));
             performActionFor(currentText());
         } else {
-            LOGGER.info("Performing Misc CommandHandler Action for: " + KeyEvent.getKeyText(keyCode));
-            LOGGER.info("My iterator is a " + iterator.getClass());
-
             iterator.performKeyPress(keyCode);
         }
     }
 
     protected abstract void performActionFor(String commandString);
+
+    protected abstract String getDefaultName();
+
+    protected abstract List<String> getDefaultHelpText();
 
     public boolean isClearingCommandStack() {
         return isClearingCommandStack;

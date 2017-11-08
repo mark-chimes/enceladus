@@ -3,8 +3,10 @@ package MainMenu;
 import Commands.CommandHandler;
 import Game.MainGameHandler;
 import Game.NewGameMessenger;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -92,5 +94,15 @@ public class MenuKeyPressHandler extends CommandHandler {
                 break;
         }
         return helpText;
+    }
+
+    @Override
+    protected String getDefaultName() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    protected List<String> getDefaultHelpText() {
+        throw new NotImplementedException();
     }
 }

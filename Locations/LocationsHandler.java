@@ -5,6 +5,7 @@ import Locations.MainBase.MainBase;
 import Locations.MainBase.MainBaseHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,5 +43,15 @@ public class LocationsHandler extends CommandHandler {
                 return mainBase.description();
         }
         return new ArrayList<>(); // TODO
+    }
+
+    @Override
+    protected String getDefaultName() {
+        return "Locations";
+    }
+
+    @Override
+    protected List<String> getDefaultHelpText() {
+        return Arrays.asList("Displays a list of locations which you have discovered.");
     }
 }
