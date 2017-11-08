@@ -16,6 +16,9 @@ public class MenuKeyPressHandler extends CommandHandler {
 
     public MenuKeyPressHandler() {
         setIteratorMessages(initialCommands());
+        setNextMessage(newGameMessage());
+        setNextCommand(new MainGameHandler());
+        shouldClearCommandStack();
     }
 
     @Override
