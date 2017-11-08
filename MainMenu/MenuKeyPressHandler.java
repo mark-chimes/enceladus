@@ -1,13 +1,11 @@
 package MainMenu;
 
-import Core.KeyPressHandler;
 import Core.CommandHandler;
 import Game.MainGameHandler;
 import Game.NewGameMessenger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
@@ -26,18 +24,27 @@ public class MenuKeyPressHandler extends CommandHandler {
         switch (actionString) {
             case "New Game" :
                 setNextMessage(newGameMessage());
-                setNextCommand(new MainGameHandler()); // TODO
+                setNextCommand(new MainGameHandler());
+                LOGGER.info("shouldClearCommandStack");
+                shouldClearCommandStack();
                 break;
-                // TODO Figure out how to do this...
             case "Instructions":
                 List<String> nextMessage = new ArrayList<>();
                 nextMessage.add("Instructions forthcoming."); // TODO
                 this.setNextMessage(nextMessage);
                 this.clearNextCommand();
+                LOGGER.info("shouldNotClearCommandStack");
+
+                shouldNotClearCommandStack();
                 break;
             case "Exit":
                 System.exit(0);
         }
+    }
+
+    @Override
+    public boolean isClearingCommandStack() {
+        return true;
     }
 
     private final ArrayList<String> initialCommands() {
