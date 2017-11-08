@@ -1,6 +1,7 @@
 package Locations.MainBase;
 
 import Commands.CommandHandler;
+import Locations.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class MainBaseHandler extends CommandHandler{
+
     public MainBaseHandler() {
         setIteratorMessages(commands());
     }
@@ -32,7 +34,6 @@ public class MainBaseHandler extends CommandHandler{
         ArrayList<String> initialCommands = new ArrayList<>();
         initialCommands.add("Description");
         initialCommands.add("Summary");
-
         initialCommands.add("Overview");
         initialCommands.add("People");
         initialCommands.add("Sub-locations");
