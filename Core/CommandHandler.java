@@ -88,8 +88,6 @@ public abstract class CommandHandler implements KeyPressHandler {
         }
     }
 
-    public abstract CommandHandler newHandlerFrom();
-
     protected abstract void performActionFor(String commandString);
 
     public boolean isClearingCommandStack() {

@@ -42,11 +42,6 @@ public class MainBaseHandler extends CommandHandler{
     }
 
     @Override
-    public CommandHandler newHandlerFrom() {
-        return new LocationsHandler();
-    }
-
-    @Override
     public List<String> getHelpText() {
         return new ArrayList<>(); // TODO
     }

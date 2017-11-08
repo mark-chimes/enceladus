@@ -61,11 +61,6 @@ public class MenuKeyPressHandler extends CommandHandler {
     }
 
     @Override
-    public CommandHandler newHandlerFrom() {
-        return new MenuKeyPressHandler();
-    }
-
-    @Override
     public List<String> getNextMessage() {
         return nextMessage;
     }

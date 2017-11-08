@@ -48,9 +48,4 @@ public class MainGameHandler extends CommandHandler {
     public List<String> getHelpText() {
         return new ArrayList<>(); // TODO
     }
-
-    @Override
-    public CommandHandler newHandlerFrom() {
-        return new MainGameHandler();
-    }
 }
