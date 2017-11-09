@@ -19,7 +19,8 @@ public class LocationsHandler extends CommandHandler {
         mainBase = new MainBase();
     }
 
-    public void performActionFor(String actionString) {
+    public void performConfirmCommand() {
+        String actionString = currentText();
         switch (actionString) {
             case "Main Base":
                 setNextCommand(new MainBaseHandler());

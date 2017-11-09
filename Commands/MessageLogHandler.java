@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Mark Chimes on 2017/11/06.
  */
-public class MessageLogHandler implements KeyPressHandler {
+public class MessageLogHandler implements CommandOrMessageIterator {
     MessageLogIterator iterator;
 
     public MessageLogHandler(List<String> messageLogs) {
@@ -21,11 +21,6 @@ public class MessageLogHandler implements KeyPressHandler {
     }
 
     @Override
-    public void performKeyPress(int keyCode) {
-        iterator.performKeyPress(keyCode);
-    }
-
-    @Override
     public String currentText() {
         return iterator.currentText();
     }
@@ -33,5 +28,15 @@ public class MessageLogHandler implements KeyPressHandler {
     @Override
     public int currentIndex() {
         return iterator.currentIndex();
+    }
+
+    @Override
+    public void performPreviousInListCommand() {
+        iterator.performPreviousInListCommand();
+    }
+
+    @Override
+    public void performNextInListCommand() {
+        iterator.performNextInListCommand();
     }
 }

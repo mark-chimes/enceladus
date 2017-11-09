@@ -24,22 +24,21 @@ public class CommandIterator implements CommandOrMessageIterator {
 
     public int currentIndex() { return iteratorIndex; }
 
-    public void performKeyPress(int action) {
-        switch (action) {
-            case KeyConstants.PREVIOUS_ITEM:
-                if (iteratorIndex > 0) {
-                    iteratorIndex--;
-                } else {
-                    iteratorIndex = items.size() - 1;
-                }
-                break;
-            case KeyConstants.NEXT_ITEM:
-                if (iteratorIndex < items.size() - 1) {
-                    iteratorIndex++;
-                } else {
-                    iteratorIndex = 0;
-                }
-                break;
+    @Override
+    public void performPreviousInListCommand() {
+        if (iteratorIndex > 0) {
+            iteratorIndex--;
+        } else {
+            iteratorIndex = items.size() - 1;
+        }
+    }
+
+    @Override
+    public void performNextInListCommand() {
+        if (iteratorIndex < items.size() - 1) {
+            iteratorIndex++;
+        } else {
+            iteratorIndex = 0;
         }
     }
 }

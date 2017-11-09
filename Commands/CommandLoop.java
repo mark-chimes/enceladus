@@ -99,7 +99,7 @@ public class CommandLoop {
         if (keyCode == KeyConstants.CONFIRM) {
             LOGGER.info("Case CONFIRM");
             LOGGER.info("Before handler.performKeyPress, handler has next message? " + !handler.getNextMessage().isEmpty());
-            handler.performKeyPress(keyCode);
+            handler.performConfirmCommand();
             LOGGER.info("After handler.performKeyPress, handler has next message? " + !handler.getNextMessage().isEmpty());
 
             Optional<CommandHandler> nextCommandOpt = handler.nextCommand();
@@ -128,6 +128,12 @@ public class CommandLoop {
             } else {
                 LOGGER.info("Handler has no next message.");
             }
+        } else if (keyCode == KeyConstants.PREVIOUS_ITEM) {
+            LOGGER.info("performPreviousInListCommand");
+            handler.performPreviousInListCommand();
+        } else if (keyCode == KeyConstants.NEXT_ITEM) {
+            LOGGER.info("performNextInListCommand");
+            handler.performNextInListCommand();
         } else if (keyCode == KeyConstants.SWITCH_TEXT_COMMAND) {
             LOGGER.info("Case switchText");
             setToMessageState();
@@ -148,18 +154,23 @@ public class CommandLoop {
                 addTexts(helpText);
             }
         } else {
-            handler.performKeyPress(keyCode);
+            LOGGER.info("Unknown command");
         }
     }
 
     private void performActionForCommandMessageLog(int keyCode) {
-        if (keyCode == KeyConstants.SWITCH_TEXT_COMMAND || keyCode == KeyConstants.SKIP_TEXT
+        if (keyCode == KeyConstants.PREVIOUS_TEXT) {
+            LOGGER.info("performPreviousInListCommand");
+            messageLogHandler.performPreviousInListCommand();
+        } else if (keyCode == KeyConstants.NEXT_TEXT) {
+            LOGGER.info("performNextInListCommand");
+            messageLogHandler.performNextInListCommand();
+        } else if (keyCode == KeyConstants.SWITCH_TEXT_COMMAND || keyCode == KeyConstants.SKIP_TEXT
                 || keyCode == KeyConstants.CONFIRM) {
-            LOGGER.info("Case switchText or skipText");
+            LOGGER.info("Case switchText or skipText(");
             setToCommandState();
         } else {
-            LOGGER.info("Case performMiscKeyPress");
-            messageLogHandler.performKeyPress(keyCode);
+            LOGGER.info("Unknown command");
         }
     }
 

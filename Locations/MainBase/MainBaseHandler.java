@@ -16,7 +16,8 @@ public class MainBaseHandler extends CommandHandler{
         setIteratorMessages(commands());
     }
 
-    public void performActionFor(String actionString) {
+    public void performConfirmCommand() {
+        String actionString = currentText();
         switch (actionString) {
             case "Description":
                 break;

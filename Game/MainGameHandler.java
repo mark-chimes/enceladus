@@ -22,7 +22,8 @@ public class MainGameHandler extends CommandHandler {
     }
 
     @Override
-    public void performActionFor(String actionString) {
+    public void performConfirmCommand() {
+        String actionString = currentText();
         switch (actionString) {
             case VIEW_PEOPLE:
                 setNextCommand(new PeopleHandler());

@@ -38,18 +38,17 @@ public class MessageLogIterator implements CommandOrMessageIterator {
 
     public int currentIndex() { return iteratorIndex; }
 
-    public void performKeyPress(int action) {
-        switch (action) {
-            case KeyConstants.PREVIOUS_TEXT:
-                if (iteratorIndex > 0) {
-                    iteratorIndex--;
-                }
-                break;
-            case KeyConstants.NEXT_TEXT:
-                if (iteratorIndex < texts.size()) {
-                    iteratorIndex++;
-                }
-                break;
+    @Override
+    public void performPreviousInListCommand() {
+        if (iteratorIndex > 0) {
+            iteratorIndex--;
+        }
+    }
+
+    @Override
+    public void performNextInListCommand() {
+        if (iteratorIndex < texts.size()) {
+            iteratorIndex++;
         }
     }
 }

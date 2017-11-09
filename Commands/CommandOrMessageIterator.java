@@ -3,7 +3,9 @@ package Commands;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public interface CommandOrMessageIterator extends KeyPressHandler {
+public interface CommandOrMessageIterator {
     String currentText();
     int currentIndex();
+    void performPreviousInListCommand();
+    void performNextInListCommand();
 }

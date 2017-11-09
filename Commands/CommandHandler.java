@@ -1,6 +1,5 @@
 package Commands;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +8,7 @@ import java.util.logging.Logger;
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
-public abstract class CommandHandler implements KeyPressHandler {
+public abstract class CommandHandler implements CommandOrMessageIterator {
     private final static Logger LOGGER = Logger.getLogger(CommandHandler.class.getName());
 
     protected CommandOrMessageIterator iterator;
@@ -17,12 +16,10 @@ public abstract class CommandHandler implements KeyPressHandler {
     protected List<String> nextMessage = new ArrayList<>();
     protected boolean isClearingCommandStack = false;
 
-    @Override
     public String currentText() {
         return iterator.currentText();
     }
 
-    @Override
     public int currentIndex() {
         return iterator.currentIndex();
     }
@@ -67,15 +64,15 @@ public abstract class CommandHandler implements KeyPressHandler {
         setTextOrItemIterator(new CommandIterator(messages));
     }
 
-    public void performKeyPress(int keyCode) {
-        if (keyCode == KeyConstants.CONFIRM) {
-            performActionFor(currentText());
-        } else {
-            iterator.performKeyPress(keyCode);
-        }
+    public abstract void performConfirmCommand();
+
+    public void performPreviousInListCommand() {
+        iterator.performPreviousInListCommand();
     }
 
-    protected abstract void performActionFor(String commandString);
+    public void performNextInListCommand() {
+        iterator.performNextInListCommand();
+    }
 
     protected abstract String getDefaultName();
 

@@ -24,8 +24,8 @@ public class MenuKeyPressHandler extends CommandHandler {
     }
 
     @Override
-    public void performActionFor(String actionString) {
-        LOGGER.info("Performing action for: " + actionString);
+    public void performConfirmCommand() {
+        String actionString = currentText();
         switch (actionString) {
             case "New Game" :
                 CommandHandler mainGameHandler = new MainGameHandler();
