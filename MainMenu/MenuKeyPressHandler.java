@@ -1,11 +1,10 @@
 package MainMenu;
 
-import Commands.CommandHandler;
-import Commands.CommandTuple;
-import Commands.NullCommandHandler;
+import commandAndMessage.command.CommandHandler;
+import commandAndMessage.command.CommandTuple;
+import commandAndMessage.command.NullCommandHandler;
 import Game.MainGameHandler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,7 +1,9 @@
-package Commands;
+package commandAndMessage.main;
 
 import MainMenu.MenuKeyPressHandler;
 import MainMenu.WelcomeMessenger;
+import commandAndMessage.command.CommandHandler;
+import commandAndMessage.message.MessageLogHandler;
 
 import java.awt.EventQueue;
 import java.awt.event.KeyAdapter;
@@ -159,7 +161,7 @@ public class CommandLoop {
             LOGGER.info("performNextInListCommand");
             messageLogHandler.performNextInListCommand();
         } else if (keyCode == KeyConstants.SWITCH_TEXT_COMMAND || keyCode == KeyConstants.SKIP_TEXT
-                || keyCode == KeyConstants.CONFIRM) {
+                || keyCode == KeyConstants.CONFIRM || keyCode == KeyConstants.HELP) {
             LOGGER.info("Case switchText or skipText(");
             setToCommandState();
         } else {

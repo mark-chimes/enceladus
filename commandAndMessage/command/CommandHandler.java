@@ -1,8 +1,7 @@
-package Commands;
+package commandAndMessage.command;
 
 import com.sun.javafx.UnmodifiableArrayList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

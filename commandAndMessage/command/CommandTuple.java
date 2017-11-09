@@ -1,4 +1,6 @@
-package Commands;
+package commandAndMessage.command;
+
+import commandAndMessage.command.CommandHandler;
 
 import java.util.List;
 

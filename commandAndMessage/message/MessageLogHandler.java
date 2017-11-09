@@ -1,4 +1,6 @@
-package Commands;
+package commandAndMessage.message;
+
+import commandAndMessage.command.CommandOrMessageIterator;
 
 import java.util.List;
 

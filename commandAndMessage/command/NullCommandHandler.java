@@ -1,6 +1,7 @@
-package Commands;
+package commandAndMessage.command;
 
-import java.util.ArrayList;
+import commandAndMessage.command.CommandHandler;
+
 import java.util.List;
 
 /**

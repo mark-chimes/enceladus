@@ -1,4 +1,7 @@
-package Commands;
+package commandAndMessage.message;
+
+import commandAndMessage.main.KeyConstants;
+import commandAndMessage.command.CommandOrMessageIterator;
 
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;

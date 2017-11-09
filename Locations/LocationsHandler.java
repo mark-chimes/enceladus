@@ -1,12 +1,10 @@
 package Locations;
 
-import Commands.CommandHandler;
-import Commands.CommandTuple;
-import Commands.NullCommandHandler;
-import Locations.MainBase.MainBase;
 import Locations.MainBase.MainBaseHandler;
+import commandAndMessage.command.CommandHandler;
+import commandAndMessage.command.CommandTuple;
+import commandAndMessage.command.NullCommandHandler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,13 +12,11 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class LocationsHandler extends CommandHandler {
-    Location mainBase = new MainBase();;
-
-    private final List<CommandTuple> commandTuples = Arrays.asList(
+    private final List<CommandTuple> locationCommands = Arrays.asList(
             new CommandTuple( "Main Base",
                     EMPTY_LIST,
                     Arrays.asList("The main base from which you operate."),
-                    new NullCommandHandler(),
+                    new MainBaseHandler(),
                     false
             ),
             new CommandTuple("The Wild Beyond",
@@ -32,7 +28,7 @@ public class LocationsHandler extends CommandHandler {
     );
 
     public LocationsHandler() {
-        setIteratorCommands(commandTuples);
+        setIteratorCommands(locationCommands);
     }
 
 }

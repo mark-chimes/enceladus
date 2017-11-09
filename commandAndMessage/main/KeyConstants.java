@@ -1,4 +1,4 @@
-package Commands;
+package commandAndMessage.main;
 
 import java.awt.event.KeyEvent;
 

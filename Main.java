@@ -1,5 +1,5 @@
-import Commands.BasicGui;
-import Commands.CommandLoop;
+import commandAndMessage.main.BasicGui;
+import commandAndMessage.main.CommandLoop;
 
 /**
  * Created by Mark Chimes on 2017/10/31.

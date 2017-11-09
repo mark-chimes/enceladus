@@ -1,4 +1,4 @@
-package Commands;
+package commandAndMessage.command;
 
 /**
  * Created by Mark Chimes on 2017/11/05.

@@ -1,8 +1,8 @@
 package Game;
 
-import Commands.CommandHandler;
-import Commands.CommandTuple;
-import Commands.NullCommandHandler;
+import commandAndMessage.command.CommandHandler;
+import commandAndMessage.command.CommandTuple;
+import commandAndMessage.command.NullCommandHandler;
 import Locations.LocationsHandler;
 import People.PeopleHandler;
 

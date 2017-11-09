@@ -1,4 +1,4 @@
-package Commands;
+package commandAndMessage.command;
 
 import java.util.List;
 

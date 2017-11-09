@@ -1,8 +1,9 @@
 package Locations.MainBase;
 
-import Commands.CommandHandler;
-import Commands.CommandTuple;
-import Commands.NullCommandHandler;
+import People.PeopleHandler;
+import commandAndMessage.command.CommandHandler;
+import commandAndMessage.command.CommandTuple;
+import commandAndMessage.command.NullCommandHandler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,14 +35,14 @@ public class MainBaseHandler extends CommandHandler{
             new CommandTuple("People",
                     EMPTY_LIST,
                     Arrays.asList("A list of all the survivors currently in this location."),
-                    new NullCommandHandler(),
+                    new PeopleHandler(),
                     false
             ),
             new CommandTuple("Sub-locations",
                     EMPTY_LIST,
                     Arrays.asList("A list of sub-locations within this location, " +
                             "from which you can get a more fine-grained view."),
-                    new NullCommandHandler(),
+                    new SubLocationsHandler(),
                     false
             )
     );
