@@ -2,6 +2,7 @@ package Locations.MainBase;
 
 import Locations.Location;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,7 +11,11 @@ import java.util.List;
 public class LivingQuarters implements Location {
     @Override
     public List<String> description() {
-        // TODO
-        return null;
+        return Arrays.asList("Description forthcoming");
+    }
+
+    @Override
+    public String name() {
+        return "Living Quarters";
     }
 }

@@ -11,6 +11,11 @@ import java.util.List;
 public class MainBase implements Location {
     @Override
     public List<String> description() {
-        return Arrays.asList("The main base.", "Description forthcoming.");
+        return Arrays.asList("The main base.");
+    }
+
+    @Override
+    public String name() {
+        return "Main Base";
     }
 }
