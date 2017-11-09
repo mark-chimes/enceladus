@@ -6,19 +6,23 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class CommandIterator implements CommandOrMessageIterator {
-    private final List<String> items;
+    private final List<CommandTuple> items;
     private int iteratorIndex;
 
-    public CommandIterator(List<String> items) {
+    public CommandIterator(List<CommandTuple> items) {
         this(items, 0);
     }
 
-    public CommandIterator(List<String> items, int index) {
+    public CommandIterator(List<CommandTuple> items, int index) {
         this.items = items;
         iteratorIndex = index;
     }
 
     public String currentText() {
+        return currentCommand().actionString;
+    }
+
+    public CommandTuple currentCommand() {
         return items.get(iteratorIndex);
     }
 

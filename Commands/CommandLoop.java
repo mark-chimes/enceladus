@@ -98,24 +98,18 @@ public class CommandLoop {
     private void performActionForCommand(int keyCode) {
         if (keyCode == KeyConstants.CONFIRM) {
             LOGGER.info("Case CONFIRM");
-            LOGGER.info("Before handler.performKeyPress, handler has next message? " + !handler.getNextMessage().isEmpty());
             handler.performConfirmCommand();
-            LOGGER.info("After handler.performKeyPress, handler has next message? " + !handler.getNextMessage().isEmpty());
 
             Optional<CommandHandler> nextCommandOpt = handler.nextCommand();
             List<String> nextMessage = handler.getNextMessage();
             boolean isClearingCommandStack = handler.isClearingCommandStack();
 
             if (isClearingCommandStack) {
-                LOGGER.info("Is clearing command stack");
                 previousCommands.clear();
             }
 
             if (nextCommandOpt.isPresent()) {
-                LOGGER.info("Next commandOpt is present");
-
                 if (!isClearingCommandStack) {
-                    LOGGER.info("Pushing " + handler.getClass() + " to stack.");
                     previousCommands.push(handler);
                 }
                 setCurrentCommandHandler(nextCommandOpt.get());
@@ -123,7 +117,6 @@ public class CommandLoop {
             }
 
             if (!nextMessage.isEmpty()) {
-                LOGGER.info("Handler has next message so adding message to queue.");
                 addTexts(nextMessage);
             } else {
                 LOGGER.info("Handler has no next message.");

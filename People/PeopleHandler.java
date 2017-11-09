@@ -1,6 +1,8 @@
 package People;
 
 import Commands.CommandHandler;
+import Commands.CommandTuple;
+import Commands.NullCommandHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,41 +12,22 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class PeopleHandler extends CommandHandler {
+    private final List<CommandTuple> commandTuples = Arrays.asList(
+            new CommandTuple("Mark",
+                    EMPTY_LIST,
+                    Arrays.asList("A person named Mark"),
+                    new NullCommandHandler(),
+                    false
+            ),
+            new CommandTuple("Lilley",
+                    EMPTY_LIST,
+                    Arrays.asList("A person named Lilley."),
+                    new NullCommandHandler(),
+                    false
+            )
+    );
+
     public PeopleHandler() {
-        setIteratorMessages(commands());
-    }
-
-    public void performConfirmCommand() {
-        String actionString = currentText();
-        switch (actionString) {
-            case "Mark":
-                break;
-            case "Lilley":
-                break;
-        }
-    }
-
-    private final ArrayList<String> commands() {
-        ArrayList<String> initialCommands = new ArrayList<>();
-
-        initialCommands.add("Mark");
-        initialCommands.add("Lilley");
-        return initialCommands;
-    }
-
-    @Override
-    public List<String> getHelpText() {
-        return new ArrayList<>(); // TODO
-    }
-
-
-    @Override
-    protected String getDefaultName() {
-        return "People";
-    }
-
-    @Override
-    public List<String> getDefaultHelpText() {
-        return Arrays.asList("Shows a list of the survivors about which you know.");
+        setIteratorCommands(commandTuples);
     }
 }

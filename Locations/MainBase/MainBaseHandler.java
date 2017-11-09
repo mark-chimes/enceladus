@@ -1,9 +1,9 @@
 package Locations.MainBase;
 
 import Commands.CommandHandler;
-import Locations.Location;
+import Commands.CommandTuple;
+import Commands.NullCommandHandler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,51 +11,43 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class MainBaseHandler extends CommandHandler{
+    private final List<CommandTuple> commandTuples = Arrays.asList(
+            new CommandTuple("Description",
+                    EMPTY_LIST,
+                    Arrays.asList("A description of this location."),
+                    new NullCommandHandler(),
+                    false
+            ),
+            new CommandTuple("Status Summary",
+                    EMPTY_LIST,
+                    Arrays.asList("A summary of the status of this location," +
+                            "and what has happened here recently."),
+                    new NullCommandHandler(),
+                    false
+            ),
+            new CommandTuple("Overview",
+                    EMPTY_LIST,
+                    Arrays.asList("An overview of this location."),
+                    new NullCommandHandler(),
+                    false
+            ),
+            new CommandTuple("People",
+                    EMPTY_LIST,
+                    Arrays.asList("A list of all the survivors currently in this location."),
+                    new NullCommandHandler(),
+                    false
+            ),
+            new CommandTuple("Sub-locations",
+                    EMPTY_LIST,
+                    Arrays.asList("A list of sub-locations within this location, " +
+                            "from which you can get a more fine-grained view."),
+                    new NullCommandHandler(),
+                    false
+            )
+    );
 
     public MainBaseHandler() {
-        setIteratorMessages(commands());
-    }
-
-    public void performConfirmCommand() {
-        String actionString = currentText();
-        switch (actionString) {
-            case "Description":
-                break;
-            case "Summary":
-                break;
-            case "Overview":
-                break;
-            case "People":
-                break;
-            case "Sub-locations":
-                break;
-        }
-    }
-
-    private final ArrayList<String> commands() {
-        ArrayList<String> initialCommands = new ArrayList<>();
-        initialCommands.add("Description");
-        initialCommands.add("Summary");
-        initialCommands.add("Overview");
-        initialCommands.add("People");
-        initialCommands.add("Sub-locations");
-
-        return initialCommands;
-    }
-
-    @Override
-    public List<String> getHelpText() {
-        return new ArrayList<>(); // TODO
-    }
-
-    @Override
-    protected String getDefaultName() {
-        return "Main Base";
-    }
-
-    @Override
-    public List<String> getDefaultHelpText() {
-        return Arrays.asList("The main base", "Description forthcoming");
+        setIteratorCommands(commandTuples);
     }
 }
 

@@ -1,6 +1,8 @@
 package Locations;
 
 import Commands.CommandHandler;
+import Commands.CommandTuple;
+import Commands.NullCommandHandler;
 import Locations.MainBase.MainBase;
 import Locations.MainBase.MainBaseHandler;
 
@@ -12,47 +14,25 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class LocationsHandler extends CommandHandler {
-    Location mainBase;
+    Location mainBase = new MainBase();;
+
+    private final List<CommandTuple> commandTuples = Arrays.asList(
+            new CommandTuple( "Main Base",
+                    EMPTY_LIST,
+                    Arrays.asList("The main base from which you operate."),
+                    new NullCommandHandler(),
+                    false
+            ),
+            new CommandTuple("The Wild Beyond",
+                    EMPTY_LIST,
+                    Arrays.asList("The dangerous wilds that lie outside the base."),
+                    new NullCommandHandler(),
+                    false
+            )
+    );
 
     public LocationsHandler() {
-        setIteratorMessages(commands());
-        mainBase = new MainBase();
+        setIteratorCommands(commandTuples);
     }
 
-    public void performConfirmCommand() {
-        String actionString = currentText();
-        switch (actionString) {
-            case "Main Base":
-                setNextCommand(new MainBaseHandler());
-                break;
-            case "The Wild Beyond":
-                break;
-        }
-    }
-
-    private final ArrayList<String>  commands() {
-        ArrayList<String> initialCommands = new ArrayList<>();
-        initialCommands.add("Main Base");
-        initialCommands.add("The Wild Beyond");
-        return initialCommands;
-    }
-
-    @Override
-    public List<String> getHelpText() {
-        switch (currentText()) {
-            case "Main Base":
-                return mainBase.description();
-        }
-        return new ArrayList<>(); // TODO
-    }
-
-    @Override
-    protected String getDefaultName() {
-        return "Locations";
-    }
-
-    @Override
-    public List<String> getDefaultHelpText() {
-        return Arrays.asList("Displays a list of locations which you have discovered.");
-    }
 }

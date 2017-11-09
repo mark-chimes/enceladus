@@ -1,20 +1,18 @@
 package Commands;
 
+import com.sun.javafx.UnmodifiableArrayList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * Created by Mark Chimes on 2017/11/05.
  */
 public abstract class CommandHandler implements CommandOrMessageIterator {
-    private final static Logger LOGGER = Logger.getLogger(CommandHandler.class.getName());
+    public final List<String> EMPTY_LIST = new UnmodifiableArrayList(new String[0], 0);
 
-    protected CommandOrMessageIterator iterator;
-    protected Optional<CommandHandler> nextCommand = Optional.empty();
-    protected List<String> nextMessage = new ArrayList<>();
-    protected boolean isClearingCommandStack = false;
+    protected CommandIterator iterator;
 
     public String currentText() {
         return iterator.currentText();
@@ -24,47 +22,35 @@ public abstract class CommandHandler implements CommandOrMessageIterator {
         return iterator.currentIndex();
     }
 
-    protected void setTextOrItemIterator(CommandOrMessageIterator iterator) {
+    protected void setTextOrItemIterator(CommandIterator iterator) {
         this.iterator = iterator;
     }
 
     public Optional<CommandHandler> nextCommand() {
-        return nextCommand;
-    }
+        CommandHandler handler = currentCommand().nextCommand;
 
-    protected void setNextCommand(CommandHandler newCommand) {
-        LOGGER.info("Setting next commaand to: " + newCommand.getClass());
-        nextCommand = Optional.ofNullable(newCommand);
-    }
-
-    protected void clearNextCommand() {
-        nextCommand = Optional.empty();
-    }
-
-    protected void shouldClearCommandStack() {
-        isClearingCommandStack = true;
-    }
-
-    protected void shouldNotClearCommandStack() {
-        isClearingCommandStack = false;
+        if (handler instanceof NullCommandHandler) {
+            return Optional.empty();
+        } else {
+            return Optional.of(handler);
+        }
     }
 
     public List<String> getNextMessage() {
-        return nextMessage;
+        return currentCommand().nextMessage;
     }
 
-    protected void setNextMessage(List<String> nextMessage) {
-        LOGGER.info("Set next message got called!");
-        this.nextMessage = nextMessage;
+    public List<String> getHelpText() {
+        return currentCommand().helpText;
     }
 
-    public abstract List<String> getHelpText();
-
-    protected void setIteratorMessages(List<String> messages) {
-        setTextOrItemIterator(new CommandIterator(messages));
+    protected void setIteratorCommands(List<CommandTuple> commands) {
+        setTextOrItemIterator(new CommandIterator(commands));
     }
 
-    public abstract void performConfirmCommand();
+    public final CommandTuple currentCommand() {
+        return iterator.currentCommand();
+    }
 
     public void performPreviousInListCommand() {
         iterator.performPreviousInListCommand();
@@ -74,15 +60,11 @@ public abstract class CommandHandler implements CommandOrMessageIterator {
         iterator.performNextInListCommand();
     }
 
-    protected abstract String getDefaultName();
-
-    public abstract List<String> getDefaultHelpText();
-
-    public List<String> getMessageDisplayedByThisCommand() {
-        return new ArrayList<>();
-    }
-
     public boolean isClearingCommandStack() {
-        return isClearingCommandStack;
+        return currentCommand().shouldClearCommandStack;
     }
+
+    public void performConfirmCommand() {
+        currentCommand().executable.run();
+    };
 }
