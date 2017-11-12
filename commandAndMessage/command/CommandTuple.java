@@ -18,7 +18,8 @@ public class CommandTuple {
     public CommandTuple(String actionString,
                         List<String> nextMessage,
                         List<String> helpText,
-                        CommandHandler nextCommand, boolean shouldClearCommandStack) {
+                        CommandHandler nextCommand,
+                        boolean shouldClearCommandStack) {
         this.actionString = actionString;
         this.nextMessage = nextMessage;
         this.helpText = helpText;

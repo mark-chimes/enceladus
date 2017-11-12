@@ -3,6 +3,7 @@ package People;
 import commandAndMessage.command.CommandHandler;
 import commandAndMessage.command.CommandTuple;
 import commandAndMessage.command.NullCommandHandler;
+import commandAndMessage.main.KeyConstants;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,13 +19,13 @@ public class PersonHandler extends CommandHandler {
 
         List<CommandTuple> commands = Arrays.asList(
                 new CommandTuple( "Description",
-                        EMPTY_LIST,
+                        KeyConstants.EMPTY_LIST,
                         Arrays.asList("Displays a basic description for " + person.name() + "."),
                         new NullCommandHandler(),
                         false
                 ),
                 new CommandTuple("Location",
-                        EMPTY_LIST,
+                        KeyConstants.EMPTY_LIST,
                         Arrays.asList("Displays where " + person.name() + " is currently situated."),
                         new NullCommandHandler(),
                         false

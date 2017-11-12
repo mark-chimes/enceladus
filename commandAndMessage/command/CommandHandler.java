@@ -9,8 +9,6 @@ import java.util.Optional;
  * Created by Mark Chimes on 2017/11/05.
  */
 public abstract class CommandHandler implements CommandOrMessageIterator {
-    public final List<String> EMPTY_LIST = new UnmodifiableArrayList(new String[0], 0);
-
     protected CommandIterator iterator;
 
     public String currentText() {

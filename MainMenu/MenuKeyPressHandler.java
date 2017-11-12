@@ -4,6 +4,7 @@ import commandAndMessage.command.CommandHandler;
 import commandAndMessage.command.CommandTuple;
 import commandAndMessage.command.NullCommandHandler;
 import Game.MainGameHandler;
+import commandAndMessage.main.KeyConstants;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,19 +27,19 @@ public class MenuKeyPressHandler extends CommandHandler {
                 false
         ),
         new CommandTuple("Load game",
-                EMPTY_LIST,
+                KeyConstants.EMPTY_LIST,
                 Arrays.asList("Continues a game that was previously played."),
                 new NullCommandHandler(),
                 false
         ),
         new CommandTuple("Options",
-                EMPTY_LIST,
+                KeyConstants.EMPTY_LIST,
                 Arrays.asList("Set game-play options such as controls."),
                 new NullCommandHandler(),
                 false
         ),
         new CommandTuple("Exit",
-                EMPTY_LIST,
+                KeyConstants.EMPTY_LIST,
                 Arrays.asList("Continues a game that was previously played."),
                 new NullCommandHandler(),
                 false,

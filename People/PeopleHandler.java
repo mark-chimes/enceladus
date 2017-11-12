@@ -3,6 +3,7 @@ package People;
 import commandAndMessage.command.CommandHandler;
 import commandAndMessage.command.CommandTuple;
 import commandAndMessage.command.NullCommandHandler;
+import commandAndMessage.main.KeyConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ public class PeopleHandler extends CommandHandler {
 
         for (Person person : people) {
             commandTuples.add(new CommandTuple(person.name(),
-                    EMPTY_LIST,
+                    KeyConstants.EMPTY_LIST,
                     Arrays.asList("A person named " +  person.name() + "."),
                     new PersonHandler(person),
                     false

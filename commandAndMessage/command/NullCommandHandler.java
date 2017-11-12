@@ -1,6 +1,7 @@
 package commandAndMessage.command;
 
 import commandAndMessage.command.CommandHandler;
+import commandAndMessage.main.KeyConstants;
 
 import java.util.List;
 
@@ -10,6 +11,6 @@ import java.util.List;
 public class NullCommandHandler extends CommandHandler {
     @Override
     public List<String> getHelpText() {
-        return EMPTY_LIST;
+        return KeyConstants.EMPTY_LIST;
     }
 }

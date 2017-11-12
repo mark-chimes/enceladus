@@ -1,28 +1,29 @@
-package Locations.MainBase;
+package Locations.WildsBeyond;
 
 import Locations.Location;
+import Locations.LocationHandler;
+import commandAndMessage.command.CommandHandler;
 import commandAndMessage.main.KeyConstants;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Mark Chimes on 2017/11/09.
+ * Created by Mark Chimes on 2017/11/08.
  */
-public class ControlRoom extends Location {
+public class WildsBeyond extends Location {
     @Override
     public List<String> description() {
-        return Arrays.asList("Description forthcoming");
+        return Arrays.asList("The main base.");
     }
 
     @Override
     public String name() {
-        return "Control Room";
+        return "Main Base";
     }
 
     @Override
     public List<String> nextMessage() {
         return KeyConstants.EMPTY_LIST;
     }
-
 }
