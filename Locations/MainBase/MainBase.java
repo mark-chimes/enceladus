@@ -2,6 +2,7 @@ package Locations.MainBase;
 
 import Locations.Location;
 import Locations.LocationHandler;
+import People.Person;
 import commandAndMessage.command.CommandHandler;
 import commandAndMessage.command.CommandTuple;
 import commandAndMessage.command.NullCommandHandler;
@@ -14,6 +15,11 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/08.
  */
 public class MainBase extends Location {
+
+    public MainBase(List<Person> allPeople, List<Location> sublocations) {
+        super(allPeople, sublocations);
+    }
+
     @Override
     public List<String> description() {
         return Arrays.asList("The main base.");
@@ -30,8 +36,4 @@ public class MainBase extends Location {
         return KeyConstants.EMPTY_LIST;
     }
 
-    @Override
-    public List<Location> getSublocations() {
-        return Arrays.asList(new LivingQuarters(), new ControlRoom());
-    }
 }

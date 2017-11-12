@@ -13,10 +13,10 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class PeopleHandler extends CommandHandler {
-    public PeopleHandler(List<Person> people) {
+    public PeopleHandler(List<Person> allPeople) {
         List<CommandTuple> commandTuples = new ArrayList<>();
 
-        for (Person person : people) {
+        for (Person person : allPeople) {
             commandTuples.add(new CommandTuple(person.name(),
                     KeyConstants.EMPTY_LIST,
                     Arrays.asList("A person named " +  person.name() + "."),

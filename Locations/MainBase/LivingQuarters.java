@@ -1,7 +1,7 @@
 package Locations.MainBase;
 
 import Locations.Location;
-import People.Lilley;
+import People.Person;
 import commandAndMessage.main.KeyConstants;
 
 import java.util.Arrays;
@@ -11,8 +11,9 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/09.
  */
 public class LivingQuarters extends Location {
-    public LivingQuarters() {
-        super.peopleHere = Arrays.asList(new Lilley());
+
+    public LivingQuarters(List<Person> allPeople, List<Location> sublocations) {
+        super(allPeople, sublocations);
     }
 
     @Override

@@ -9,27 +9,39 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public abstract class Location {
-    protected List<Person> peopleHere = new ArrayList<>();
+    protected List<Person> allPeople;
+    protected final List<Location> sublocations;
 
     public abstract List<String> description();
     public abstract String name();
     public abstract List<String> nextMessage();
 
-    public List<Location> getSublocations() {
-        return new ArrayList<>();
+    public final List<Location> getSublocations() {
+        return sublocations;
     }
 
     public List<Person> getPeopleRecursive() {
+        List<Person> peopleHere = new ArrayList<>();
+
         if (getSublocations().isEmpty()) {
+            for (Person person : allPeople) {
+                if (person.currentLocation().equals(this)) {
+                    peopleHere.add(person);
+                }
+            }
+
             return peopleHere;
         }
 
-        List<Person> people = new ArrayList<>();
-
         for (Location subLocation : getSublocations()) {
-            people.addAll(subLocation.getPeopleRecursive());
+            peopleHere.addAll(subLocation.getPeopleRecursive());
         }
 
-        return people;
+        return peopleHere;
+    }
+
+    public Location(List<Person> allPeople, List<Location> sublocations) {
+        this.allPeople = allPeople;
+        this.sublocations = sublocations;
     }
 }

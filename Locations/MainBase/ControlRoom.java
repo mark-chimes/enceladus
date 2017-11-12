@@ -2,6 +2,7 @@ package Locations.MainBase;
 
 import Locations.Location;
 import People.Mark;
+import People.Person;
 import commandAndMessage.main.KeyConstants;
 
 import java.lang.reflect.Array;
@@ -12,8 +13,8 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/09.
  */
 public class ControlRoom extends Location {
-    public ControlRoom() {
-        super.peopleHere = Arrays.asList(new Mark());
+    public ControlRoom(List<Person> allPeople, List<Location> sublocations) {
+        super(allPeople, sublocations);
     }
 
     @Override
