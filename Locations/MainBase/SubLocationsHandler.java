@@ -1,6 +1,7 @@
 package Locations.MainBase;
 
 import Locations.Location;
+import Locations.LocationCommandTuple;
 import commandAndMessage.command.CommandHandler;
 import commandAndMessage.command.CommandTuple;
 import commandAndMessage.command.NullCommandHandler;
@@ -16,11 +17,9 @@ import java.util.List;
 public class SubLocationsHandler extends CommandHandler {
     private final List<CommandTuple> locationCommands = new ArrayList<>();
 
-    public SubLocationsHandler(Location location) {
-        final List<Location> sublocations = location.getSublocations();
-
+    public SubLocationsHandler(List<Location> sublocations) {
         for (Location sublocation : sublocations) {
-            locationCommands.add(sublocation.getCommandTuple());
+            locationCommands.add(new LocationCommandTuple(sublocation));
         }
 
         setIteratorCommands(locationCommands);

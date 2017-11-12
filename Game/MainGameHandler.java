@@ -1,6 +1,8 @@
 package Game;
 
 import Locations.LocationsListHandler;
+import People.Lilley;
+import People.Mark;
 import commandAndMessage.command.CommandHandler;
 import commandAndMessage.command.CommandTuple;
 import commandAndMessage.command.NullCommandHandler;
@@ -19,7 +21,7 @@ public class MainGameHandler extends CommandHandler {
             new CommandTuple("View People",
                     KeyConstants.EMPTY_LIST,
                     Arrays.asList("A list of all your survivors."),
-                    new PeopleHandler(),
+                    new PeopleHandler(Arrays.asList(new Mark(), new Lilley())),
                     false
             ),
             new CommandTuple("View Locations",

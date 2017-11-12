@@ -161,7 +161,8 @@ public class CommandLoop {
             LOGGER.info("performNextInListCommand");
             messageLogHandler.performNextInListCommand();
         } else if (keyCode == KeyConstants.SWITCH_TEXT_COMMAND || keyCode == KeyConstants.SKIP_TEXT
-                || keyCode == KeyConstants.CONFIRM || keyCode == KeyConstants.HELP) {
+                || keyCode == KeyConstants.CONFIRM || keyCode == KeyConstants.HELP
+                || keyCode == KeyConstants.PREVIOUS_MENU) {
             LOGGER.info("Case switchText or skipText(");
             setToCommandState();
         } else {

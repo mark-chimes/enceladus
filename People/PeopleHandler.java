@@ -13,8 +13,7 @@ import java.util.List;
  * Created by Mark Chimes on 2017/11/05.
  */
 public class PeopleHandler extends CommandHandler {
-    public PeopleHandler() {
-        List<Person> people = Arrays.asList(new Mark(), new Lilley());
+    public PeopleHandler(List<Person> people) {
         List<CommandTuple> commandTuples = new ArrayList<>();
 
         for (Person person : people) {
