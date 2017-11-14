@@ -17,10 +17,7 @@ class SubLocationsHandler(sublocations: List<Location>) : CommandHandler() {
     private val locationCommands = ArrayList<CommandTuple>()
 
     init {
-        for (sublocation in sublocations) {
-            locationCommands.add(LocationCommandTuple(sublocation))
-        }
-
+        sublocations.mapTo(locationCommands) { LocationCommandTuple(it) }
         setIteratorCommands(locationCommands)
     }
 }
